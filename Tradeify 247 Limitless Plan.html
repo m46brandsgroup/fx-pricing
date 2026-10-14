@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#050506">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tradeify 24/7 Limitless Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,200..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans+Mono:wght@200..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506; --panel:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --line:rgba(240,237,236,0.12);
+  --sky:#FF4F40; --skysoft:rgba(255,79,64,0.08); --gold:#FF4F40; --goldsoft:rgba(255,79,64,0.08); --good:#F0EDEC;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#050506; --panel:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --line:rgba(240,237,236,0.12);
+    --sky:#FF4F40; --skysoft:rgba(255,79,64,0.08); --gold:#FF4F40; --goldsoft:rgba(255,79,64,0.08); --good:#F0EDEC;
+  }}
+:root[data-theme="dark"]{
+  --bg:#050506; --panel:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --line:rgba(240,237,236,0.12);
+  --sky:#FF4F40; --skysoft:rgba(255,79,64,0.08); --gold:#FF4F40; --goldsoft:rgba(255,79,64,0.08); --good:#F0EDEC;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+#plan{margin:0;background:var(--bg);color:var(--ink);font-family:"Mona Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.55;font-variant-numeric:tabular-nums}
+#plan .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 72px}
+#plan .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+#plan .brand svg{width:28px;height:28px}
+#plan .hero{padding:36px 0 28px}
+#plan .hero h1{font-size:clamp(34px,6vw,64px);line-height:1.02;margin:0;font-weight:700;letter-spacing:-0.035em}
+#plan .hero h1 span{display:block;color:var(--muted);font-weight:500;font-size:.42em;letter-spacing:-0.01em;margin-bottom:10px}
+#plan .hero p{max-width:56ch;color:var(--muted);font-size:17px;margin:16px 0 0}
+#plan .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+#plan .facts li{list-style:none;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 14px;font-size:14px}
+#plan .facts{padding:0}
+#plan .pricing{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+#plan .phead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line)}
+#plan .phead h2{margin:0;font-size:20px}
+#plan .toggle{display:inline-flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;user-select:none}
+#plan .switch{position:relative;width:44px;height:24px;border-radius:12px;background:var(--line);border:0;padding:0;cursor:pointer;transition:background .15s}
+#plan .switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+#plan .switch[aria-checked="true"]{background:var(--gold)}
+#plan .switch[aria-checked="true"]::after{transform:translateX(20px)}
+#plan .scroll{overflow-x:auto}
+#plan table.pt{border-collapse:collapse;width:100%;min-width:640px}
+#plan .pt th,#plan .pt td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:center}
+#plan .pt thead th{font-size:13px;color:var(--muted);font-weight:500}
+#plan .pt thead th b{display:block;color:var(--ink);font-size:18px;font-weight:700}
+#plan .pt tbody th{text-align:left;font-weight:600;font-size:14px;min-width:200px}
+#plan .pt tbody th small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+#plan .pt tbody tr:last-child th,#plan .pt tbody tr:last-child td{border-bottom:0}
+#plan .cellbtn{font:inherit;font-size:18px;font-weight:700;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:10px;padding:8px 12px;cursor:pointer;min-width:96px}
+#plan .cellbtn:hover{border-color:var(--line)}
+#plan .cellbtn[aria-pressed="true"]{background:var(--sky);color:#fff}
+#plan .pnote{padding:12px 20px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+#plan h2.sec{font-size:26px;margin:56px 0 6px;letter-spacing:-0.02em}
+#plan .sub{color:var(--muted);margin:0 0 20px}
+#plan .config{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+@media (max-width:900px){#plan .config{grid-template-columns:1fr}}
+#plan .choice{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+#plan .choice h3{margin:0 0 4px;font-size:16px}
+#plan .choice p{margin:0 0 14px;color:var(--muted);font-size:14px}
+#plan .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+#plan .opt{font:inherit;text-align:left;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+#plan .opt b{display:block;font-size:16px}
+#plan .opt span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+#plan .opt[aria-pressed="true"]{border-color:var(--sky);background:var(--skysoft)}
+#plan .opt.boost[aria-pressed="true"]{border-color:var(--gold);background:var(--goldsoft)}
+#plan button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+#plan .summary{background:var(--panel);border:1.5px solid var(--ink);border-radius:18px;padding:22px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (max-width:900px){#plan .summary{position:static}}
+#plan .summary .name{font-size:14px;color:var(--muted)}
+#plan .summary .size{font-size:30px;font-weight:700;letter-spacing:-0.02em;margin:2px 0 14px}
+#plan .price{display:flex;align-items:baseline;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+#plan .price strong{font-size:44px;line-height:1;letter-spacing:-0.03em}
+#plan .price span{color:var(--muted);font-size:14px}
+#plan .break{font-size:13px;color:var(--muted);margin-top:8px}
+#plan .rules{list-style:none;padding:0;margin:14px 0 18px}
+#plan .rules li{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+#plan .rules li span:first-child{color:var(--muted)}
+#plan .rules li span:last-child{text-align:right;font-weight:600}
+#plan .cta{width:100%;font:inherit;font-weight:600;font-size:16px;background:var(--sky);color:#fff;border:0;border-radius:12px;padding:14px;cursor:pointer}
+#plan .toast{margin-top:10px;font-size:13px;color:var(--muted);min-height:1.2em;text-align:center}
+#plan .levtable{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+#plan .levtable th,#plan .levtable td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right}
+#plan .levtable th:first-child,#plan .levtable td:first-child{text-align:left}
+#plan .levtable thead th{color:var(--muted);font-weight:500;font-size:13px}
+#plan .levtable td.on{color:var(--gold);font-weight:700}
+#plan .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+#plan .flow div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+#plan .flow strong{display:block;font-size:30px;letter-spacing:-0.02em}
+#plan .flow b{display:block;margin:6px 0 4px}
+#plan .flow p{margin:0;color:var(--muted);font-size:14px}
+#plan .ladder{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:20px 0 6px}
+#plan .ladder i{display:block}
+#plan .ladderkey{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted)}
+#plan .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+#plan .fine{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+#plan .fine p{max-width:95ch;margin:0 0 8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:root{--w:400;--wd:100;--op:20;--primary:#FF4F40;--pure:#FFFFFF;--firm:#2E3740}
+*{font-variation-settings:'wght' var(--w),'wdth' var(--wd),'opsz' var(--op)}
+#plan{font-family:'Mona Sans',system-ui,sans-serif;font-feature-settings:'ss01' on,'ss03' on,'ss05' on;font-variant-numeric:tabular-nums;letter-spacing:0;color-scheme:dark}
+#plan b,#plan strong,#plan th,#plan summary,#plan .opt b,#plan .brandname{--w:600}
+#plan h1,#plan h2,#plan h3,#plan .hl{--w:600;--wd:112.5;--op:72;letter-spacing:-0.01em}
+#plan .mono{font-family:'Mona Sans Mono',ui-monospace,monospace}
+#plan h1{background:linear-gradient(173.4deg,#FFFFFF,#FFFFFFD1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+#plan .logo{height:26px;width:auto;display:block}
+#plan .brandbar{display:flex;align-items:center;margin-bottom:8px}
+#plan button:focus-visible,#plan input:focus-visible,#plan select:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+#plan{background:var(--bg)}
+#plan .hero{position:relative}
+#plan .hero::before{content:"";position:absolute;left:-120px;top:-80px;width:420px;height:320px;background:radial-gradient(closest-side,rgba(255,79,64,0.16),transparent);filter:blur(30px);pointer-events:none;z-index:-1}
+#plan .hero h1 span{-webkit-text-fill-color:var(--muted);color:var(--muted);--w:500;--wd:100;--op:20}
+#plan .pricing,#plan .choice,#plan .flow div,#plan .facts li{background:linear-gradient(135deg,#151C22,#11171C);box-shadow:inset 1px 1px 0 rgba(255,255,255,0.05)}
+#plan .summary{background:linear-gradient(135deg,#151C22,#11171C);border:1px solid rgba(240,237,236,0.16);box-shadow:inset 1px 1px 0 rgba(255,255,255,0.06),0 0 60px rgba(255,79,64,0.06)}
+#plan .cellbtn{font-family:'Mona Sans Mono',ui-monospace,monospace;--w:500;font-size:17px}
+#plan .cellbtn[aria-pressed="true"]{background:transparent;color:var(--pure);border-color:var(--primary);box-shadow:0 0 18px rgba(255,79,64,0.22)}
+#plan .opt{background:var(--bg)}
+#plan .opt[aria-pressed="true"],#plan .opt.boost[aria-pressed="true"]{border-color:var(--primary);background:rgba(255,79,64,0.06)}
+#plan .switch::after{background:#F0EDEC}
+#plan .cta{background:#FFFFFF;color:#050506;--w:600}
+#plan .price strong,#plan .flow strong,#plan .summary .size{--w:600;--wd:112.5;--op:72;letter-spacing:-0.01em}
+#plan .levtable td:not(:first-child){font-family:'Mona Sans Mono',ui-monospace,monospace}
+#plan .levtable td.on{color:var(--primary)}
+#plan .facts li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--primary);margin-right:8px;vertical-align:middle}
+#plan .pc-wrap{margin:8px 0 48px}
+#plan .pc-controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-bottom:24px}
+#plan .pc-ctl{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+#plan .pc-seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:#0B0E11}
+#plan .pc-seg button{font:inherit;font-size:14px;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:7px 14px;cursor:pointer}
+#plan .pc-seg button[aria-pressed="true"]{color:var(--pure);background:#1C242B;box-shadow:inset 0 0 0 1px var(--primary)}
+#plan .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+@media (max-width:1060px){#plan .cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){#plan .cards{grid-template-columns:1fr}}
+#plan .pcard{position:relative;display:flex;flex-direction:column;background:linear-gradient(135deg,#171B20,#0F1215);border:1px solid rgba(240,237,236,0.08);border-radius:22px;padding-top:22px;overflow:visible}
+#plan .pcard.pop{border-color:rgba(255,79,64,0.7);box-shadow:0 0 40px rgba(255,79,64,0.10)}
+#plan .pcard.pop::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;background:radial-gradient(120% 60% at 100% 0%,rgba(255,79,64,0.22),transparent 55%)}
+#plan .badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#050506;border:1px solid var(--primary);color:var(--pure);border-radius:999px;padding:4px 14px;font-size:13px;--w:600;white-space:nowrap;z-index:2}
+#plan .pc-head{padding:0 20px 18px;position:relative;z-index:1}
+#plan .pc-title{margin:0;font-size:30px;line-height:1.1;background:none;-webkit-text-fill-color:currentColor;color:var(--pure)}
+#plan .pc-title span{font-size:.62em;color:var(--ink);-webkit-text-fill-color:var(--ink);--w:400;--wd:100;--op:20;margin-left:4px}
+#plan .pc-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-top:10px}
+#plan .pc-price s{font-family:'Mona Sans Mono',ui-monospace,monospace;color:var(--muted);font-size:20px}
+#plan .pc-price strong{font-family:'Mona Sans Mono',ui-monospace,monospace;color:var(--primary);font-size:26px;--w:600}
+#plan .pc-price em{font-style:normal;color:var(--muted);font-size:14px;flex-basis:100%}
+#plan .pc-rows{list-style:none;margin:0;padding:0;position:relative;z-index:1}
+#plan .pc-rows li{display:flex;justify-content:space-between;gap:12px;padding:12px 20px;background:#14181C;border-top:1px solid #0B0E11;font-size:15px}
+#plan .pc-rows li span:first-child{color:var(--muted)}
+#plan .pc-rows li span:last-child{--w:600;color:var(--ink);text-align:right}
+#plan .pc-rows li.chg span:last-child{color:var(--pure)}
+#plan .pc-rows li.chg span:last-child::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--primary);margin-left:6px;vertical-align:middle}
+#plan .pc-foot{padding:16px 20px 18px;margin-top:auto;display:flex;flex-direction:column;gap:14px;align-items:center;position:relative;z-index:1}
+#plan .pc-link{font:inherit;font-size:15px;color:var(--pure);background:none;border:0;text-decoration:underline;text-underline-offset:4px;cursor:pointer;--w:600}
+#plan .pc-funded{width:100%;font-size:13.5px;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+#plan .pc-funded ul{margin:0;padding-left:16px}
+#plan .pc-funded li{margin:3px 0}
+#plan .pc-cta{width:100%;font:inherit;font-size:16px;--w:600;color:#050506;background:#FFFFFF;border:0;border-radius:10px;padding:13px 10px;cursor:pointer;box-shadow:0 0 0 1px rgba(255,79,64,0.55),0 0 22px rgba(255,79,64,0.35);display:flex;gap:8px;align-items:center;justify-content:center}
+#plan .pc-cta svg{width:18px;height:18px}
+#plan .pc-code{font:inherit;font-size:13.5px;white-space:nowrap;color:var(--ink);background:none;border:0;cursor:pointer;display:flex;gap:8px;align-items:center}
+#plan .pc-code svg{width:16px;height:16px;opacity:.8}
+#plan .pc-note{font-size:13px;color:var(--muted);margin-top:16px}
+:root{
+  --paper:#050506; --surface:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --rule:rgba(240,237,236,0.12);
+  --cobalt:#7D8894; --trader:#F0EDEC; --fund:#FF4F40; --cost:#3A444E; --warn:#FF4F40; --ok:#F0EDEC; --tint:rgba(240,237,236,0.04);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --paper:#050506; --surface:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --rule:rgba(240,237,236,0.12);
+    --cobalt:#7D8894; --trader:#F0EDEC; --fund:#FF4F40; --cost:#3A444E; --warn:#FF4F40; --ok:#F0EDEC; --tint:rgba(240,237,236,0.04);
+  }}
+:root[data-theme="dark"]{
+  --paper:#050506; --surface:#11171C; --ink:#F0EDEC; --muted:#B8B1AE; --rule:rgba(240,237,236,0.12);
+  --cobalt:#7D8894; --trader:#F0EDEC; --fund:#FF4F40; --cost:#3A444E; --warn:#FF4F40; --ok:#F0EDEC; --tint:rgba(240,237,236,0.04);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+#economics{margin:0;background:var(--paper);color:var(--ink);font-family:"Mona Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums}
+#economics .wrap{max-width:1180px;margin:0 auto;padding:40px 20px 80px}
+#economics h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:0 0 12px;font-weight:700;letter-spacing:-0.02em;max-width:22ch}
+#economics h2{font-size:24px;margin:56px 0 8px;letter-spacing:-0.01em}
+#economics h3{font-size:17px;margin:24px 0 6px}
+#economics p{max-width:72ch;margin:0 0 12px}
+#economics .lede{color:var(--muted);font-size:18px;max-width:64ch}
+#economics .muted{color:var(--muted)}
+#economics .small{font-size:13px}
+#economics .split{margin:32px 0 8px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:24px}
+#economics .split .lbl{font-size:15px;color:var(--muted);margin-bottom:12px}
+#economics .bar{display:flex;height:64px;border-radius:8px;overflow:hidden}
+#economics .bar>div{display:flex;align-items:center;padding:0 14px;color:#fff;font-weight:600;font-size:15px;white-space:nowrap;min-width:0;overflow:hidden}
+#economics .seg-trader{background:var(--trader)}
+#economics .seg-fund{background:var(--fund)}
+#economics .seg-firm{background:var(--cobalt)}
+#economics .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+#economics .legend b{display:block;font-size:15px}
+#economics .legend span{font-size:14px;color:var(--muted)}
+#economics .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+#economics .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 32px;margin-top:16px}
+#economics .rules dl{margin:0}
+#economics .rules div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+#economics .rules dt{color:var(--muted);font-size:14px}
+#economics .rules dd{margin:0;font-size:15px}
+#economics .steps{list-style:none;padding:0;margin:20px 0 0;counter-reset:s}
+#economics .steps li{position:relative;padding:0 0 22px 48px;max-width:76ch}
+#economics .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-weight:600;font-size:14px}
+#economics .steps li::after{content:"";position:absolute;left:14px;top:34px;bottom:4px;width:2px;background:var(--rule)}
+#economics .steps li:last-child::after{display:none}
+#economics .steps b{display:block}
+#economics .example{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:20px;margin-top:20px}
+#economics .example .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+#economics .ex-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+#economics .ex-grid div{border-left:3px solid var(--rule);padding-left:12px}
+#economics .ex-grid strong{display:block;font-size:22px}
+#economics .ex-grid span{font-size:14px;color:var(--muted)}
+#economics .callout{margin-top:16px;padding:12px 14px;background:var(--tint);border-radius:8px;font-size:15px;max-width:none}
+#economics select,#economics input[type=number]{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:6px 8px}
+#economics input[type=number]{width:100%;font-variant-numeric:tabular-nums}
+#economics input:focus-visible,#economics select:focus-visible,#economics button:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+#economics .seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--surface)}
+#economics .seg button{font:inherit;border:0;background:transparent;color:var(--ink);padding:8px 14px;cursor:pointer;font-size:14px}
+#economics .seg button+button{border-left:1px solid var(--rule)}
+#economics .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+#economics .btn{font:inherit;font-size:14px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer}
+#economics .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border:1px solid var(--rule);border-radius:12px;background:var(--surface);margin:20px 0}
+#economics .kpis div{padding:16px 18px;border-right:1px solid var(--rule)}
+#economics .kpis div:last-child{border-right:0}
+#economics .kpis strong{display:block;font-size:24px;line-height:1.2}
+#economics .kpis span{font-size:13px;color:var(--muted)}
+#economics .good{color:var(--ok)}
+#economics .bad{color:var(--warn)}
+#economics .model{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start}
+@media (max-width:980px){#economics .model{grid-template-columns:1fr}}
+#economics .inputs{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:4px 16px 16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);overflow:auto}
+@media (max-width:980px){#economics .inputs{position:static;max-height:none}}
+#economics details{border-bottom:1px solid var(--rule);padding:10px 0}
+#economics details:last-of-type{border-bottom:0}
+#economics summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between}
+#economics summary::after{content:"+";color:var(--muted)}
+#economics details[open] summary::after{content:"−"}
+#economics .field{display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+#economics .field label{color:var(--ink)}
+#economics .field .hint{grid-column:1/-1;font-size:12px;color:var(--muted);margin-top:-4px}
+#economics .pgrid{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+#economics .pgrid th{font-weight:500;color:var(--muted);text-align:left;padding:4px 2px}
+#economics .pgrid td{padding:2px}
+#economics .pgrid input{padding:4px 4px;font-size:13px}
+#economics .tablebox{background:var(--surface);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+#economics .tablehead{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--rule)}
+#economics .scroll{overflow-x:auto}
+#economics table.ue{border-collapse:collapse;width:100%;min-width:980px;font-size:14px}
+#economics .ue th,#economics .ue td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+#economics .ue th:first-child,#economics .ue td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);z-index:1;min-width:210px;white-space:normal}
+#economics .ue thead th{vertical-align:bottom;font-weight:600;font-size:13px;line-height:1.3}
+#economics .ue thead th small{display:block;font-weight:400;color:var(--muted)}
+#economics .ue tr.grp td{background:var(--tint);font-weight:600;color:var(--ink);text-align:left;font-size:13px}
+#economics .ue tr.grp td:first-child{background:var(--tint)}
+#economics .ue tr.key td{font-weight:700}
+#economics .ue td.boostcol,#economics .ue th.boostcol{background:color-mix(in srgb,var(--fund) 7%,var(--surface))}
+#economics .mini{display:flex;height:12px;width:120px;border-radius:3px;overflow:hidden;margin-left:auto}
+#economics .mini i{display:block;height:100%}
+#economics .legend2{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);padding:10px 16px}
+#economics .foot{margin-top:56px;padding-top:16px;border-top:1px solid var(--rule);color:var(--muted);font-size:13px}
+#economics .foot p{max-width:90ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:root{--w:400;--wd:100;--op:20;--primary:#FF4F40;--pure:#FFFFFF;--firm:#2E3740}
+*{font-variation-settings:'wght' var(--w),'wdth' var(--wd),'opsz' var(--op)}
+#economics{font-family:'Mona Sans',system-ui,sans-serif;font-feature-settings:'ss01' on,'ss03' on,'ss05' on;font-variant-numeric:tabular-nums;letter-spacing:0;color-scheme:dark}
+#economics b,#economics strong,#economics th,#economics summary,#economics .opt b,#economics .brandname{--w:600}
+#economics h1,#economics h2,#economics h3,#economics .hl{--w:600;--wd:112.5;--op:72;letter-spacing:-0.01em}
+#economics .mono{font-family:'Mona Sans Mono',ui-monospace,monospace}
+#economics h1{background:linear-gradient(173.4deg,#FFFFFF,#FFFFFFD1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+#economics .logo{height:26px;width:auto;display:block}
+#economics .brandbar{display:flex;align-items:center;margin-bottom:8px}
+#economics button:focus-visible,#economics input:focus-visible,#economics select:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+#economics .seg-trader{color:#050506!important}
+#economics .seg-firm{background:var(--firm)!important;color:var(--ink)!important}
+#economics .split,#economics .example,#economics .kpis,#economics .inputs,#economics .tablebox{background:linear-gradient(135deg,#151C22,#11171C);box-shadow:inset 1px 1px 0 rgba(255,255,255,0.05)}
+#economics .steps li::before{background:var(--surface);color:var(--ink);border:1px solid var(--primary)}
+#economics .seg button[aria-pressed="true"]{background:rgba(240,237,236,0.08);color:var(--pure);box-shadow:inset 0 -2px 0 var(--primary)}
+#economics .ue td:not(:first-child){font-family:'Mona Sans Mono',ui-monospace,monospace}
+#economics .ue tr.grp td{font-family:'Mona Sans',system-ui,sans-serif}
+#economics .ue td .muted{font-family:'Mona Sans',system-ui,sans-serif}
+#economics .ue td.boostcol,#economics .ue th.boostcol{background:rgba(255,79,64,0.04)}
+#economics .ue th:first-child,#economics .ue td:first-child{background:#11171C}
+#economics .ue tr.grp td,#economics .ue tr.grp td:first-child{background:#171E25}
+#economics .good::before{content:"✓ ";color:var(--muted)}
+#economics .bad::before{content:"▲ "}
+#economics .kpis strong,#economics .ex-grid strong{--w:600;--wd:112.5;--op:72;letter-spacing:-0.01em}
+#economics .callout{border-left:2px solid var(--primary)}
+#economics input[type=number],#economics select{background:var(--paper);color:var(--ink)}
+#economics .btn{background:var(--paper);color:var(--ink)}
+
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:#050506;color:#F0EDEC;font-family:'Mona Sans',system-ui,sans-serif;font-feature-settings:'ss01' on,'ss03' on,'ss05' on;font-variant-numeric:tabular-nums}
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(5,5,6,0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(240,237,236,0.08)}
+.topnav-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.topnav .logo{height:24px;width:auto;display:block}
+.tabs{display:inline-flex;gap:4px;padding:3px;border:1px solid rgba(240,237,236,0.12);border-radius:999px;background:#0B0E11}
+.tabs button{font:inherit;font-size:14px;color:#B8B1AE;background:transparent;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;font-variation-settings:'wght' 500,'wdth' 100,'opsz' 20}
+.tabs button[aria-selected="true"]{color:#FFFFFF;background:#1C242B;box-shadow:inset 0 0 0 1px #FF4F40}
+.tabs button:focus-visible{outline:2px solid #FF4F40;outline-offset:2px}
+[role="tabpanel"][hidden]{display:none}
+#economics .field{grid-template-columns:minmax(0,1fr) minmax(0,88px)}
+#economics .field input{min-width:0}
+#economics .inputs{top:calc(env(safe-area-inset-top,0px) + 72px);max-height:calc(100vh - 88px)}
+#plan .summary{top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (max-width:980px){#economics .inputs{max-height:none}}
+
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Sections">
+  <div class="topnav-in">
+    <svg class="logo" role="img" aria-label="Tradeify 24/7" viewBox="0 0 617 111" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M307.291 38.7716H296.841V27.2216H307.291V20.8416C307.291 15.9283 308.758 12.1883 311.691 9.62162C314.624 6.98162 318.768 5.66162 324.121 5.66162H336.441V15.8916H328.631C326.284 15.8916 324.561 16.405 323.461 17.4316C322.434 18.385 321.921 19.9616 321.921 22.1616V27.2216H335.121V38.7716H321.921V85.8516H307.291V38.7716ZM334.571 92.3416H342.161C345.094 92.3416 347.368 91.8283 348.981 90.8016C350.668 89.775 352.024 88.125 353.051 85.8516L355.801 79.4716V83.4316L329.841 27.3316H345.791L356.681 53.8416L362.181 66.1616H362.291L367.351 53.8416L377.691 27.3316H393.201L366.581 89.7016C365.188 93.1483 363.464 95.935 361.411 98.0616C359.431 100.188 357.011 101.728 354.151 102.682C351.364 103.708 348.028 104.222 344.141 104.222H334.571V92.3416Z" fill="white"/>
+<path d="M277.987 27.3316H292.617V85.8516H277.987V27.3316ZM277.987 5.66162H292.617V19.1916H277.987V5.66162Z" fill="white"/>
+<path d="M242.101 86.8418C235.501 86.8418 229.781 85.6318 224.941 83.2118C220.101 80.7185 216.398 77.1985 213.831 72.6518C211.338 68.1051 210.091 62.8618 210.091 56.9218C210.091 50.6885 211.375 45.2618 213.941 40.6418C216.581 36.0218 220.285 32.5018 225.051 30.0818C229.891 27.5885 235.501 26.3418 241.881 26.3418C248.995 26.3418 254.971 27.7351 259.811 30.5218C264.651 33.2351 268.208 37.1218 270.481 42.1818C272.828 47.1685 273.781 53.0351 273.341 59.7818H218.891L226.371 54.7218C225.418 59.1951 225.455 63.0451 226.481 66.2718C227.508 69.4985 229.415 71.9551 232.201 73.6418C234.988 75.2551 238.398 76.0618 242.431 76.0618C246.465 76.0618 249.838 75.2918 252.551 73.7518C255.265 72.1385 257.061 69.9385 257.941 67.1518H272.791C271.985 71.2585 270.188 74.8151 267.401 77.8218C264.688 80.7551 261.131 82.9918 256.731 84.5318C252.405 86.0718 247.528 86.8418 242.101 86.8418ZM224.061 50.6518H259.261L258.271 52.0818C258.198 48.9285 257.501 46.2151 256.181 43.9418C254.861 41.6685 252.955 39.9451 250.461 38.7718C248.041 37.5251 245.145 36.9018 241.771 36.9018C238.471 36.9018 235.575 37.5251 233.081 38.7718C230.588 40.0185 228.645 41.7785 227.251 44.0518C225.858 46.3251 225.088 49.0018 224.941 52.0818L224.061 50.6518Z" fill="white"/>
+<path d="M168.448 86.9516C163.095 86.9516 158.365 85.7416 154.258 83.3216C150.225 80.8283 147.071 77.3083 144.798 72.7616C142.598 68.1416 141.498 62.7516 141.498 56.5916C141.498 50.4316 142.598 45.0783 144.798 40.5316C147.071 35.9116 150.261 32.3916 154.368 29.9716C158.475 27.4783 163.205 26.2316 168.558 26.2316C173.545 26.2316 177.945 27.295 181.758 29.4216C185.571 31.475 188.285 34.3716 189.898 38.1116H190.008V5.66162H204.748V85.8516H190.778L190.338 75.0716H190.118C188.431 78.8116 185.681 81.745 181.868 83.8716C178.128 85.925 173.655 86.9516 168.448 86.9516ZM173.178 75.4016C176.551 75.4016 179.521 74.6683 182.088 73.2016C184.655 71.735 186.598 69.755 187.918 67.2616C189.311 64.695 190.008 61.7616 190.008 58.4616V54.8316C190.008 51.605 189.348 48.7083 188.028 46.1416C186.708 43.575 184.765 41.5583 182.198 40.0916C179.705 38.5516 176.735 37.7816 173.288 37.7816C169.768 37.7816 166.725 38.5516 164.158 40.0916C161.665 41.5583 159.758 43.7216 158.438 46.5816C157.118 49.3683 156.458 52.705 156.458 56.5916C156.458 62.4583 157.888 67.0783 160.748 70.4516C163.681 73.7516 167.825 75.4016 173.178 75.4016Z" fill="white"/>
+<path d="M100.224 86.8414C93.9171 86.8414 88.8938 85.3748 85.1538 82.4414C81.4871 79.5081 79.6538 75.4748 79.6538 70.3414C79.6538 64.4748 81.8171 59.9281 86.1438 56.7015C90.5438 53.4748 96.6671 51.8248 104.514 51.7515L121.454 51.6414V59.7814L107.374 60.0014C103.047 60.0014 99.8205 60.7715 97.6938 62.3115C95.5671 63.8515 94.5038 66.0148 94.5038 68.8015C94.5038 71.2948 95.4205 73.2381 97.2538 74.6315C99.1605 76.0248 101.837 76.7215 105.284 76.7215C107.997 76.7215 110.417 76.2448 112.544 75.2915C114.67 74.3381 116.357 72.9815 117.604 71.2215C118.85 69.4615 119.584 67.4081 119.804 65.0615V46.9115C119.804 43.6115 118.777 41.1548 116.724 39.5414C114.744 37.9281 111.81 37.1215 107.924 37.1215C104.184 37.1215 101.214 37.8548 99.0138 39.3214C96.8871 40.7881 95.7138 42.9148 95.4938 45.7015H81.1938C81.4871 41.6681 82.7338 38.1848 84.9338 35.2515C87.2071 32.3181 90.3238 30.0815 94.2838 28.5414C98.3171 27.0014 103.01 26.2314 108.364 26.2314C114.01 26.2314 118.777 27.0381 122.664 28.6514C126.624 30.2648 129.594 32.6481 131.574 35.8015C133.554 38.9548 134.544 42.8048 134.544 47.3514V69.9014C134.544 71.7348 134.874 73.0548 135.534 73.8615C136.194 74.5948 137.22 74.9615 138.614 74.9615H140.924V85.8515H133.004C129.484 85.8515 126.697 85.0815 124.644 83.5415C122.59 81.9281 121.307 79.6181 120.794 76.6115H120.574C119.034 79.7648 116.43 82.2581 112.764 84.0914C109.097 85.9248 104.917 86.8414 100.224 86.8414Z" fill="white"/>
+<path d="M45.2032 27.3315H58.5132L59.0632 37.4515H59.2832C60.5298 34.0782 62.6565 31.4382 65.6632 29.5315C68.7432 27.5515 72.2632 26.5615 76.2232 26.5615C76.8098 26.5615 77.2865 26.5615 77.6532 26.5615C78.8265 26.5615 79.7798 26.6349 80.5132 26.7815V40.4215C78.9732 40.2015 77.4698 40.0915 76.0032 40.0915C72.6298 40.0915 69.7698 40.6782 67.4232 41.8515C65.0765 42.9515 63.2432 44.6382 61.9232 46.9115C60.6765 49.1115 59.9798 51.8249 59.8332 55.0515V85.8515H45.2032V27.3315Z" fill="white"/>
+<path d="M26.4035 85.8518C21.6368 85.8518 18.0435 84.6784 15.6235 82.3318C13.2768 79.9851 12.1035 76.3551 12.1035 71.4418V38.7718H1.10349V27.3318H12.1035V11.4918L26.6235 9.07178V27.3318H40.2635V38.7718H26.7335V68.1418C26.7335 70.0484 27.1735 71.4418 28.0535 72.3218C28.9335 73.1284 30.2902 73.5318 32.1235 73.5318H40.3735V85.8518H26.4035Z" fill="white"/>
+<path d="M520.588 61.915H498.852L520.588 33.4268V61.915Z" fill="#FF4F40"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M576.207 0C589.317 0 595.872 0.000438213 600.879 2.55176C605.283 4.79596 608.864 8.37678 611.108 12.7812C613.66 17.7885 613.66 24.3435 613.66 37.4531V72.8516C613.66 85.961 613.66 92.5162 611.108 97.5234C608.864 101.928 605.283 105.509 600.879 107.753C595.872 110.304 589.317 110.304 576.207 110.304H454.453C441.344 110.304 434.788 110.304 429.781 107.753C425.377 105.509 421.796 101.928 419.552 97.5234C417 92.5162 417 85.961 417 72.8516V37.4531C417 24.3434 417 17.7885 419.552 12.7812C421.796 8.37675 425.377 4.79596 429.781 2.55176C434.788 0.000452757 441.343 0 454.453 0H576.207ZM464.121 21.1719C459.311 21.1719 455.086 22.0224 451.449 23.7236C447.812 25.425 444.937 27.9188 442.825 31.2041C440.713 34.4308 439.481 38.3322 439.129 42.9082H450.657C451.009 39.0949 452.3 36.1023 454.529 33.9316C456.817 31.7025 459.838 30.5879 463.593 30.5879C467.054 30.5879 469.812 31.4968 471.865 33.3154C473.977 35.0754 475.033 37.4816 475.033 40.5322C475.033 42.4094 474.564 44.0813 473.625 45.5479C472.745 47.0145 471.425 48.4524 469.665 49.8604C467.905 51.2097 465.353 52.9106 462.009 54.9639C460.953 55.6091 460.073 56.1372 459.369 56.5479C458.724 56.9585 457.873 57.5159 456.817 58.2197C452.945 60.6837 449.747 63.1181 447.225 65.5234C444.702 67.8701 442.708 70.511 441.241 73.4443C439.833 76.3189 439.129 79.5747 439.129 83.2119V85.8516H487.969V76.6123H453.204C453.407 75.6375 453.788 74.6984 454.353 73.7959C455.291 72.388 456.582 71.0386 458.225 69.748C459.867 68.4574 461.892 67.0488 464.297 65.5234C465.294 64.9369 466.174 64.4389 466.937 64.0283C467.758 63.559 468.726 63.0008 469.841 62.3555C473.713 59.9502 476.852 57.692 479.257 55.5801C481.721 53.4681 483.598 51.1798 484.889 48.7158C486.179 46.1932 486.825 43.3477 486.825 40.1797C486.825 36.4252 485.915 33.1109 484.097 30.2363C482.278 27.3617 479.638 25.1318 476.177 23.5479C472.774 21.9639 468.756 21.1719 464.121 21.1719ZM487.06 62.707V70.9795H520.588V85.8516H531.939V70.9795H543.203V61.915H531.939V21.6992H518.563L487.06 62.707ZM544.203 42.7314H553.091V31.291H580.034C576.242 36.1741 572.893 41.1899 569.987 46.3389C566.702 52.2054 564.004 58.4831 561.892 65.1709C559.838 71.8002 558.577 78.6942 558.107 85.8516H570.251C570.662 78.9876 571.835 72.3283 573.771 65.875C575.766 59.3633 578.318 53.1741 581.427 47.3076C584.536 41.4409 588.232 35.6321 592.515 29.8828V21.6992H544.203V42.7314Z" fill="#FF4F40"/>
+</svg>
+    <div class="tabs" role="tablist" aria-label="Page sections">
+      <button type="button" role="tab" id="tab-plan" aria-controls="plan" aria-selected="true">Plan</button>
+      <button type="button" role="tab" id="tab-economics" aria-controls="economics" aria-selected="false" tabindex="-1">Unit economics</button>
+    </div>
+  </div>
+</nav>
+<main id="plan" role="tabpanel" aria-labelledby="tab-plan">
+<div class="wrap">
+
+<section class="hero">
+  <h1>Limitless Plan</h1>
+  <p>One step to funded. A 5% drawdown that never trails. Funded the moment you pass. Request a payout once a day, any time, with no caps.</p>
+  <ul class="facts">
+    <li>10% profit target</li>
+    <li>5% static drawdown</li>
+    <li>No time limits</li>
+    <li>No payout caps</li>
+    <li>Daily payouts, any time</li>
+    <li>Instant funded activation</li>
+    <li>75% profit split</li>
+    <li>Path to $50K live capital</li>
+  </ul>
+</section>
+
+<section class="pc-wrap" aria-labelledby="pcTitle">
+  <h2 class="sec" id="pcTitle" style="margin-top:8px">Choose your evaluation</h2>
+  <p class="sub">Set your rules once. Every card updates.</p>
+  <div class="pc-controls">
+    <div class="pc-ctl"><span id="lblDll">Daily loss limit</span><div class="pc-seg" id="pcDll" role="group" aria-labelledby="lblDll"></div></div>
+    <div class="pc-ctl"><span id="lblCons">Eval consistency</span><div class="pc-seg" id="pcCons" role="group" aria-labelledby="lblCons"></div></div>
+    <div class="pc-ctl"><span id="lblLev">Leverage</span><div class="pc-seg" id="pcLev" role="group" aria-labelledby="lblLev"></div></div>
+  </div>
+  <div class="cards" id="cards"></div>
+  <p class="pc-note">Dot marks a rule your choices changed. Code OCT shown as an example promo.</p>
+</section>
+
+<section class="pricing" aria-labelledby="ptitle">
+  <div class="phead">
+    <h2 id="ptitle">All prices</h2>
+    <label class="toggle"><button class="switch" id="tblBoost" role="switch" aria-checked="false" aria-label="Show prices with leverage boost"></button>Show with leverage boost</label>
+  </div>
+  <div class="scroll"><table class="pt" id="priceTable"></table></div>
+  <div class="pnote">One-time fee. Pick any price to load it into the builder.</div>
+</section>
+
+<h2 class="sec">Build your account</h2>
+<p class="sub">Every choice updates your rules and price.</p>
+
+<div class="config">
+  <div>
+    <div class="choice">
+      <h3>Account size</h3>
+      <p>Your starting balance.</p>
+      <div class="opts" id="optSize"></div>
+    </div>
+    <div class="choice">
+      <h3>Daily loss limit</h3>
+      <p>Adding a daily limit lowers your price.</p>
+      <div class="opts" id="optDll"></div>
+    </div>
+    <div class="choice">
+      <h3>Evaluation consistency</h3>
+      <p>Applies to the evaluation only. It extends your target and never fails your account.</p>
+      <div class="opts" id="optCons"></div>
+    </div>
+    <div class="choice">
+      <h3>Leverage</h3>
+      <p>Boost doubles your leverage in both evaluation and funded.</p>
+      <div class="opts" id="optLev"></div>
+      <table class="levtable" id="levTable"></table>
+    </div>
+  </div>
+
+  <aside class="summary" aria-live="polite">
+    <div class="name">Limitless Plan</div>
+    <div class="size" id="sumSize"></div>
+    <div class="price"><strong id="sumPrice"></strong><span>one-time fee</span></div>
+    <div class="break" id="sumBreak"></div>
+    <ul class="rules" id="sumRules"></ul>
+    <button class="cta" id="cta" type="button">Start challenge</button>
+    <div class="toast" id="toast"></div>
+  </aside>
+</div>
+
+<h2 class="sec">How payouts work</h2>
+<p class="sub">Every payout you take also builds your path to live capital.</p>
+<div class="flow">
+  <div><strong>75%</strong><b>Paid to you</b><p>Request a payout once a day, at any time, 24/7. Small and often is fine. No caps.</p></div>
+  <div><strong>+10%</strong><b>Into your A-book fund</b><p>Paid from our share. It never comes out of your 75%.</p></div>
+  <div><strong>$10K</strong><b>Unlocks live capital</b><p>That's $100K in total payouts. Your fund becomes a 20% static drawdown on $50K of real capital.</p></div>
+  <div><strong>90%</strong><b>Split on live profits</b><p>Run it as one account or spread it across up to 4. If live losses use up your fund, you take a 4-week break before re-entering.</p></div>
+</div>
+<div class="ladder" aria-hidden="true">
+  <i style="width:75%;background:var(--good)"></i><i style="width:10%;background:var(--gold)"></i><i style="width:15%;background:var(--firm)"></i>
+</div>
+<div class="ladderkey">
+  <span><i class="dot" style="background:var(--good)"></i>75% to you</span>
+  <span><i class="dot" style="background:var(--gold)"></i>10% to your A-book fund</span>
+  <span><i class="dot" style="background:var(--firm)"></i>15% kept by Tradeify247</span>
+</div>
+
+<h2 class="sec">Funded allocation</h2>
+<p class="sub">How much funded capital you can hold at once.</p>
+<div class="flow">
+  <div><strong>$100K</strong><b>On the Limitless Plan</b><p>Hold any mix of sizes up to $100K in active funded accounts. For example, 2 × $50K or 4 × $25K.</p></div>
+  <div><strong>$300K</strong><b>Across all Tradeify 24/7 plans</b><p>Limitless counts toward your total. Each plan has its own $100K limit.</p></div>
+  <div><strong>Start size</strong><b>Is what counts</b><p>Profits, losses and payouts don't change it. A failed or closed funded account frees its space.</p></div>
+  <div><strong>30 mins</strong><b>Automated review if you pass over the limit</b><p>A passed evaluation that would take you over either limit goes to an automated funding review. You get a decision within 30 minutes.</p></div>
+  <div><strong>15</strong><b>Activations per 30 days</b><p>You can activate up to 15 funded accounts in any rolling 30-day window.</p></div>
+</div>
+
+<h2 class="sec">Tradeify 247 Elite Program</h2>
+<p class="sub">We can move you to A-book only once you've been through the A-book cycle and we've learned how you trade. From then on, you go straight to A-book and can only choose evaluations with the daily loss limit and consistency rule.</p>
+<div class="flow">
+  <div><strong>4 weeks</strong><b>Cooldown after blowing live</b><p>If you blow a live account, you go on a 4-week cooldown before you can return to live trading.</p></div>
+  <div><strong>A-book only</strong><b>After your first A-book cycle</b><p>Your next evaluations skip the sim funded stage. Pass and you go straight to a live A-book account.</p></div>
+  <div><strong>One version</strong><b>3% daily limit and 50% consistency</b><p>While A-book only, this is the only version you can buy. Full price. Discount codes don't apply.</p></div>
+  <div><strong id="abPriceHead"></strong><b>A-book only prices</b><p id="abPrices"></p></div>
+</div>
+
+<div class="fine">
+  <p>Example page for internal review. Prices and rules are draft.</p>
+  <p>Evaluation and funded accounts are simulated. Payouts are subject to rules review. High-impact news restrictions apply on funded accounts. Live accounts are subject to eligibility, verification and final approval.</p>
+</div>
+
+</div>
+</main>
+<main id="economics" role="tabpanel" aria-labelledby="tab-economics" hidden>
+<div class="wrap">
+
+<header>
+    <h1>Limitless Plan unit economics</h1>
+  <p class="lede">How the plan works, how a payout is split, how traders graduate to live capital, and what each version earns per eval sold. Change any assumption and the numbers update.</p>
+</header>
+
+<section class="split" aria-label="Payout split">
+  <div class="lbl">Where every $1,000 a funded trader withdraws goes</div>
+  <div class="bar" id="heroBar"></div>
+  <div class="legend" id="heroLegend"></div>
+</section>
+
+<h2>Plan rules</h2>
+<p class="muted">One plan. Two checkout toggles (daily loss limit and eval consistency) plus an optional leverage boost.</p>
+<div class="rules">
+  <dl>
+    <div><dt>Sizes</dt><dd>$5K, $10K, $25K, $50K</dd></div>
+    <div><dt>Profit target</dt><dd>10% of starting balance</dd></div>
+    <div><dt>Max drawdown</dt><dd>5% static. The floor never moves, in eval or funded.</dd></div>
+    <div><dt>Daily loss limit</dt><dd>Optional. 3% from start-of-day equity, resets midnight ET. Hard breach. Carries into funded.</dd></div>
+    <div><dt>Consistency</dt><dd>Optional, eval only. Best day max 50% of total profit at pass. Extends the target, never fails the account.</dd></div>
+    <div><dt>Time limits</dt><dd>None. No minimum days.</dd></div>
+  </dl>
+  <dl>
+    <div><dt>Base leverage</dt><dd>Indices 20x, gold 10x, oil 5x, crypto majors 10x. 20x total exposure.</dd></div>
+    <div><dt>Leverage boost</dt><dd>Add-on at checkout. Indices 40x, gold 20x, oil 10x, crypto majors 20x. 40x total. Eval and funded.</dd></div>
+    <div><dt>Payouts</dt><dd>Once per day, requested at any time, 24/7. Small and frequent. No caps. Must be flat. Minimum $100 gross ($5K, $10K) or $250 ($25K, $50K).</dd></div>
+    <div><dt>Activation</dt><dd>Real time. Funded accounts activate the moment the evaluation passes.</dd></div>
+    <div><dt>Profit split</dt><dd id="ruleSplit">75/25. Out of the firm's 25%, 10% goes to the trader's A-book fund and the firm keeps 15%.</dd></div>
+    <div><dt>News</dt><dd>Open in eval. High-impact restriction on funded.</dd></div>
+    <div><dt>Funded drawdown</dt><dd>Same 5% static floor. Withdrawing all profit resets the cushion to 5%.</dd></div>
+    <div><dt>Funded allocation</dt><dd>Up to $100K active on Limitless, $300K across all Tradeify 24/7 plans. Counted by starting size. Over the limit goes to an automated funding review, decided within 30 minutes. Max 15 funded activations per rolling 30 days.</dd></div>
+    <div><dt>Elite Program</dt><dd>Once a trader has been through the A-book cycle, Tradeify can move them to A-book only. They can only buy the 3% DLL, 50% consistency version, at full list price with no discount. Passing goes straight to a live A-book account. Blowing live means a 4-week cooldown.</dd></div>
+  </dl>
+</div>
+
+<h2>The A-book fund</h2>
+<p>Every payout feeds a fund held for the trader. The fund comes out of the firm's share, so the trader still gets their full cash split. The fund becomes the first-loss capital on real, A-booked accounts. The firm's live risk is capped at what it has already set aside.</p>
+<ol class="steps">
+  <li><b>Fund builds with each payout</b><span id="stepFund">On every gross payout, 10% from the firm's share goes into the trader's fund. The trader still receives their full 75% in cash.</span></li>
+  <li><b>Unlock at $10K</b><span id="stepUnlock">When the fund hits $10,000, the trader unlocks live accounts. At a 10% fund rate, that means $100,000 of gross payouts.</span></li>
+  <li><b>Fresh live accounts</b><span id="stepLive">The fund becomes a 20% static drawdown. Live allocation equals fund ÷ 20%. The trader can spread it across up to 4 accounts.</span></li>
+  <li><b>Live split 90/10</b><span id="stepSplit">Profits on live accounts are split 90% to the trader and 10% to the firm. Positions are real and A-booked.</span></li>
+  <li><b>Lose the fund, cool down</b><span id="stepCool">If live losses use up the fund, the trader goes on a 4-week cooldown before they can re-enter the live programme.</span></li>
+</ol>
+
+<div class="example" aria-label="Worked example">
+  <div class="controls">
+    <strong>Worked example</strong>
+    <div class="seg" id="exSize" role="group" aria-label="Example account size"></div>
+  </div>
+  <div class="ex-grid" id="exGrid"></div>
+  <p class="callout" id="exCallout"></p>
+</div>
+
+<h2>Unit economics</h2>
+<p class="muted">Every figure is per eval sold. Columns are each version, with and without the leverage boost. Pick a size, or blend all sizes by sales mix. Payout ratio counts cash payouts plus the share of the A-book fund the firm actually spends.</p>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="model">
+  <aside class="inputs" aria-label="Assumptions">
+    <details open>
+      <summary>Targets and volume</summary>
+      <div id="f-target"></div>
+    </details>
+    <details open>
+      <summary>Eval pass rates</summary>
+      <div id="f-pass"></div>
+    </details>
+    <details>
+      <summary>Price paid after code ($)</summary>
+      <table class="pgrid" id="priceGrid"></table>
+    </details>
+    <details>
+      <summary>Funded behaviour</summary>
+      <div id="f-funded"></div>
+    </details>
+    <details>
+      <summary>Split and A-book fund</summary>
+      <div id="f-split"></div>
+    </details>
+    <details>
+      <summary>Leverage boost</summary>
+      <div id="f-boost"></div>
+    </details>
+    <details>
+      <summary>Sales mix</summary>
+      <div id="f-mix"></div>
+    </details>
+    <details>
+      <summary>Fees and costs</summary>
+      <div id="f-costs"></div>
+    </details>
+    <div style="padding-top:12px"><button class="btn" id="resetBtn" type="button">Reset to defaults</button></div>
+  </aside>
+
+  <div class="tablebox">
+    <div class="tablehead">
+      <div class="seg" id="sizeSel" role="group" aria-label="Account size"></div>
+      <span class="small muted" id="tableNote"></span>
+    </div>
+    <div class="scroll"><table class="ue" id="ueTable"></table></div>
+    <div class="legend2">
+      <span><i class="dot" style="background:var(--trader)"></i>Cash payouts</span>
+      <span><i class="dot" style="background:var(--fund)"></i>Fund spent</span>
+      <span><i class="dot" style="background:var(--cost)"></i>Fees and costs</span>
+      <span><i class="dot" style="background:var(--cobalt)"></i>Contribution</span>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <p><b>Competitor prices.</b> List prices before promos, October 2026. MyFundedPerps Elite (10% target, 5% static, no DLL, 40x index leverage) and Signature (10% target, 6% static, 3% DLL). Vest Markets 1-Step at 10% target, 6% static, 80/20, with no DLL or a 3% DLL. Neither offers an eval consistency option, so V2 and V4 have no match. Elite already includes boosted leverage, so it is the closer match for the V1 boost column.</p>
+  <p><b>How the fund builds.</b> The fund is one balance per trader. It pools across all of a trader's funded accounts and sizes. It unlocks at a fixed dollar amount, set in the inputs.</p>
+  <p><b>Fund realisation rate</b> is the share of accrued fund the firm ultimately spends: lost on live accounts, or paid back to the trader. Fund that is never unlocked stays with the firm. The fund comes from the firm's share, so traders keep their full cash split either way. If the fund is withdrawable on exit, set this to 100%.</p>
+  <p><b>Not modelled.</b> Fixed opex, resets, timing of payouts, and capital cost of live collateral. Live trading with fund money is real execution and needs regulatory sign-off before launch.</p>
+</div>
+
+</div>
+</main>
+<script>
+(()=>{
+
+const SIZES=[5000,10000,25000,50000], SLAB=["$5K","$10K","$25K","$50K"];
+const VERS=[
+  {id:"V1",name:"No DLL, no consistency",dll:false,cons:false},
+  {id:"V2",name:"No DLL, 50% consistency",dll:false,cons:true},
+  {id:"V3",name:"3% DLL, no consistency",dll:true,cons:false},
+  {id:"V4",name:"3% DLL, 50% consistency",dll:true,cons:true}];
+const DEF={
+  target:50, volume:10000,
+  pass:[[16,17.5,20,22.5],[13,14,16,18],[6.5,7,8,9],[5,5.5,6.5,7]],
+  prices:[[51,114,335,755],[47,104,293,660],[28,62,177,392],[24,50,152,329]],
+  prNo:45, prDll:48, consMult:1.10, nPay:6, payPct:1.5,
+  cash:75, fund:10, unlockUsd:10000, liveDD:20, maxAcc:4, realise:20, liveSplit:90, liveRet:50, cooldown:4,
+  bUp:20, bAttach:35, bPass:1.20, bPaid:0.85, bSize:1.20,
+  vmix:[40,15,30,15], smix:[15,25,35,25],
+  promo:0, proc:4.5, refund:1.5, aff:10, platform:3, onboard:5, rail:1.5
+};
+const KEY="tfy-1step-abook-v10";
+let S=load(); let sizeView="2"; let exSize=3;
+function load(){try{const s=localStorage.getItem(KEY);if(s)return Object.assign(structuredClone(DEF),JSON.parse(s));}catch(e){}return structuredClone(DEF);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+const $=id=>document.getElementById(id);
+const P0=x=>x/100;
+const usd=(v,d=0)=>(v<0?"-":"")+"$"+Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=(v,d=1)=>(v*100).toFixed(d)+"%";
+const num=(v,d=1)=>v.toLocaleString("en-US",{maximumFractionDigits:d});
+
+function field(container,key,label,opts={}){
+  const idx=opts.idx;
+  const wrap=document.createElement("div");wrap.className="field";
+  const id="in-"+key+(idx!==undefined?"-"+idx:"");
+  const val=idx!==undefined?S[key][idx]:S[key];
+  wrap.innerHTML=`<label for="${id}">${label}</label><input type="number" id="${id}" step="${opts.step||1}" min="${opts.min??0}" value="${val}">`+(opts.hint?`<div class="hint">${opts.hint}</div>`:"");
+  wrap.querySelector("input").addEventListener("input",e=>{const v=parseFloat(e.target.value);if(isNaN(v))return;if(idx!==undefined)S[key][idx]=v;else S[key]=v;save();render();});
+  container.appendChild(wrap);
+}
+function buildInputs(){
+  ["f-target","f-pass","f-funded","f-split","f-boost","f-mix","f-costs"].forEach(i=>$(i).innerHTML="");
+  field($("f-target"),"target","Target payout ratio (%)",{hint:"Cash payouts plus fund spent, as a share of collected revenue."});
+  field($("f-target"),"volume","Evals sold per month",{step:100});
+  const pp=document.createElement("table");pp.className="pgrid";
+  pp.innerHTML="<tr><th></th>"+SLAB.map(s=>`<th>${s}</th>`).join("")+"</tr>"+VERS.map((v,i)=>`<tr><th>${v.id}</th>`+SIZES.map((_,j)=>`<td><input type="number" step="0.5" aria-label="${v.id} ${SLAB[j]} pass rate" data-i="${i}" data-j="${j}" value="${S.pass[i][j]}"></td>`).join("")+"</tr>").join("");
+  pp.querySelectorAll("input").forEach(el=>el.addEventListener("input",e=>{const v=parseFloat(e.target.value);if(isNaN(v))return;S.pass[+e.target.dataset.i][+e.target.dataset.j]=v;save();render();}));
+  $("f-pass").appendChild(pp);
+  $("f-pass").insertAdjacentHTML("beforeend",`<div class="field"><div class="hint" style="margin-top:4px">% by version and size, before the boost. V1 no DLL, no consistency. V2 no DLL, 50% consistency. V3 DLL, no consistency. V4 DLL, 50% consistency. Rates rise with size.</div></div>`);
+  field($("f-funded"),"prNo","Paid rate, no DLL (%)",{hint:"Share of funded traders who take at least one payout."});
+  field($("f-funded"),"prDll","Paid rate, DLL (%)");
+  field($("f-funded"),"consMult","Paid-rate multiplier, consistency eval",{step:0.05});
+  field($("f-funded"),"nPay","Payouts per paid trader",{step:0.5,hint:"Frequent, smaller payouts."});
+  field($("f-funded"),"payPct","Avg gross payout (% of balance)",{step:0.1});
+  field($("f-split"),"cash","Trader cash share (%)");
+  field($("f-split"),"fund","A-book fund share (%)",{hint:"Paid out of the firm's share. Firm keeps 100% minus cash minus fund."});
+  field($("f-split"),"unlockUsd","Fund unlock threshold ($)",{step:500,hint:"One fund per trader, pooled across all their accounts."});
+  field($("f-split"),"liveDD","Live static drawdown (% of live allocation)");
+  field($("f-split"),"maxAcc","Max live accounts");
+  field($("f-split"),"realise","Fund realisation rate (%)",{hint:"Share of accrued fund the firm ultimately spends."});
+  field($("f-split"),"liveSplit","Live split to trader (%)");
+  field($("f-split"),"liveRet","Live gross profit (% of fund deployed)",{hint:"Real profit generated on live accounts. Firm keeps its split."});
+  field($("f-split"),"cooldown","Cooldown after losing fund (weeks)");
+  field($("f-boost"),"bUp","Price uplift (%)");
+  field($("f-boost"),"bAttach","Attach rate (%)");
+  field($("f-boost"),"bPass","Pass rate multiplier",{step:0.05});
+  field($("f-boost"),"bPaid","Paid rate multiplier",{step:0.05});
+  field($("f-boost"),"bSize","Payout size multiplier",{step:0.05});
+  VERS.forEach((v,i)=>field($("f-mix"),"vmix",`${v.id} share (%)`,{idx:i}));
+  SLAB.forEach((s,i)=>field($("f-mix"),"smix",`${s} share (%)`,{idx:i}));
+  field($("f-costs"),"promo","Extra discount beyond code (%)",{hint:"Prices are what buyers pay after the code. Use this for deeper sales."});
+  field($("f-costs"),"proc","Card processing (%)",{step:0.1});
+  field($("f-costs"),"refund","Refunds and chargebacks (%)",{step:0.1});
+  field($("f-costs"),"aff","Affiliate commission (%)");
+  field($("f-costs"),"platform","Platform and data per eval ($)",{step:0.5});
+  field($("f-costs"),"onboard","Onboarding per funded ($)",{step:0.5});
+  field($("f-costs"),"rail","Payout rail fee (% of cash)",{step:0.1});
+  const pg=$("priceGrid");
+  pg.innerHTML="<tr><th></th>"+SLAB.map(s=>`<th>${s}</th>`).join("")+"</tr>"+VERS.map((v,i)=>`<tr><th>${v.id}</th>`+SIZES.map((_,j)=>`<td><input type="number" aria-label="${v.id} ${SLAB[j]} price" data-i="${i}" data-j="${j}" value="${S.prices[i][j]}"></td>`).join("")+"</tr>").join("");
+  pg.querySelectorAll("input").forEach(el=>el.addEventListener("input",e=>{const v=parseFloat(e.target.value);if(isNaN(v))return;S.prices[+e.target.dataset.i][+e.target.dataset.j]=v;save();render();}));
+}
+
+function calc(vi,boost,si){
+  const v=VERS[vi],bal=SIZES[si],P=x=>x/100;
+  const list=S.prices[vi][si];
+  const paid=boost?Math.ceil(list*(1+P(S.bUp))/10)*10-1:list;
+  const collected=paid*(1-P(S.promo));
+  const net=collected*(1-P(S.proc)-P(S.refund)-P(S.aff));
+  const pass=Math.min(1,P(S.pass[vi][si])*(boost?S.bPass:1));
+  const paidRate=Math.min(1,(v.dll?P(S.prDll):P(S.prNo))*(v.cons?S.consMult:1)*(boost?S.bPaid:1));
+  const g=bal*P(S.payPct)*(boost?S.bSize:1);
+  const grossPaid=S.nPay*g;
+  const grossEval=pass*paidRate*grossPaid;
+  const cash=grossEval*P(S.cash);
+  const fundAcc=grossEval*P(S.fund);
+  const fundCost=fundAcc*P(S.realise);
+  const live=fundCost*P(S.liveRet)*(1-P(S.liveSplit));
+  const rail=cash*P(S.rail);
+  const platform=S.platform, onboard=pass*S.onboard;
+  const contrib=net-cash-fundCost-rail-platform-onboard+live;
+  return {list,paid,collected,net,pass,paidRate,nPay:S.nPay,g,grossPaid,cash,fundAcc,fundCost,live,rail,platform,onboard,contrib,fees:collected-net};
+}
+const SUMKEYS=["list","paid","collected","net","pass","paidRate","nPay","g","grossPaid","cash","fundAcc","fundCost","live","rail","platform","onboard","contrib","fees"];
+function blendSizes(vi,boost){
+  const w=S.smix, tw=w.reduce((a,b)=>a+b,0)||1, out={};
+  SUMKEYS.forEach(k=>out[k]=0);
+  SIZES.forEach((_,si)=>{const r=calc(vi,boost,si);SUMKEYS.forEach(k=>out[k]+=r[k]*w[si]/tw);});
+  return out;
+}
+function finish(r,boost,blended){
+  const P=x=>x/100;
+  r.contribPct=r.collected?r.contrib/r.collected:0;
+  r.ratio=r.collected?(r.cash+r.fundCost)/r.collected:0;
+  r.change=P(S.target)?r.ratio/P(S.target)-1:0;
+  r.reqList=blended?null:(r.cash+r.fundCost)/P(S.target)/(1-P(S.promo))/(boost?1+P(S.bUp):1);
+  return r;
+}
+function columns(){
+  const cols=[];
+  VERS.forEach((v,vi)=>[false,true].forEach(b=>{
+    const blended=sizeView==="blend";
+    const r=blended?blendSizes(vi,b):calc(vi,b,+sizeView);
+    cols.push({v,vi,boost:b,r:finish(r,b,blended)});
+  }));
+  return cols;
+}
+function overall(){
+  const all=[];let tw=0;
+  VERS.forEach((v,vi)=>[false,true].forEach(b=>{
+    const w=S.vmix[vi]*(b?S.bAttach:100-S.bAttach);tw+=w;all.push({w,r:blendSizes(vi,b)});
+  }));
+  const o={};SUMKEYS.forEach(k=>o[k]=all.reduce((a,x)=>a+x.r[k]*x.w,0)/(tw||1));
+  return finish(o,false,true);
+}
+
+const COMP={
+  mff:{0:{name:"Elite",p:[100,200,500,null]},2:{name:"Signature",p:[null,90,225,430]}},
+  vest:{0:{name:"1-Step, no DLL",p:[75,150,375,null]},2:{name:"1-Step, 3% DLL",p:[40,80,210,null]}}
+};
+function compCell(src,vi){
+  if(sizeView==="blend")return '<span class="muted">Pick a size</span>';
+  const c=COMP[src][vi];if(!c)return '<span class="muted">No match</span>';
+  const p=c.p[+sizeView];if(p==null)return `<span class="muted">No ${SLAB[+sizeView]}</span>`;
+  return `${usd(p)} <span class="muted small">${c.name}</span>`;
+}
+function vsCell(vi,paid){
+  if(sizeView==="blend")return '<span class="muted">Pick a size</span>';
+  const ps=["mff","vest"].map(s=>COMP[s][vi]&&COMP[s][vi].p[+sizeView]).filter(x=>x!=null);
+  if(!ps.length)return '<span class="muted">No match</span>';
+  const d=paid/Math.min(...ps)-1;
+  return `<span class="${d<=0?"good":"bad"}">${d>0?"+":""}${pct(d,0)}</span>`;
+}
+const ROWS=[
+  ["grp","Pricing"],
+  ["list","Price after code",x=>usd(x)],
+  ["paid","Price incl. boost",x=>usd(x)],
+  ["collected","Collected after promo",x=>usd(x,2)],
+  ["net","Net revenue after fees",x=>usd(x,2)],
+  ["grp","Trader journey"],
+  ["pass","Eval pass rate",x=>pct(x)],
+  ["paidRate","Funded paid rate",x=>pct(x)],
+  ["nPay","Payouts per paid trader",x=>num(x)],
+  ["g","Avg gross payout",x=>usd(x)],
+  ["grossPaid","Gross withdrawn per paid trader",x=>usd(x)],
+  ["grp","Costs per eval sold"],
+  ["cash","Trader cash payouts",x=>usd(x,2)],
+  ["fundAcc","A-book fund accrued",x=>usd(x,2)],
+  ["fundCost","A-book fund spent",x=>usd(x,2)],
+  ["live","Live profit share (income)",x=>usd(x,2)],
+  ["rail","Payout rail fees",x=>usd(x,2)],
+  ["platform","Platform and data",x=>usd(x,2)],
+  ["onboard","Funded onboarding",x=>usd(x,2)],
+  ["grp","Results per eval sold"],
+  ["contrib","Contribution",x=>usd(x,2),"key"],
+  ["contribPct","Contribution margin",x=>pct(x),"key"],
+  ["ratio","Payout ratio",null,"key"],
+  ["reqList","List price for target ratio",x=>x==null?"See change":usd(x)],
+  ["change","Price change for target",x=>(x>0?"+":"")+pct(x,0)],
+  ["grp","Competitor list prices"],
+  ["mff","MyFundedPerps"],
+  ["vest","Vest Markets"],
+  ["vs","Our price vs cheapest match"],
+  ["bar","Where collected revenue goes"]
+];
+function miniBar(r){
+  const c=r.collected||1,parts=[[r.cash,"var(--trader)"],[r.fundCost,"var(--fund)"],[r.fees+r.rail+r.platform+r.onboard-r.live,"var(--cost)"],[Math.max(0,r.contrib),"var(--cobalt)"]];
+  return `<div class="mini" role="img" aria-label="Cash ${pct(r.cash/c,0)}, fund ${pct(r.fundCost/c,0)}, contribution ${pct(r.contrib/c,0)}">`+parts.map(([v,col])=>`<i style="width:${Math.max(0,v/c*100)}%;background:${col}"></i>`).join("")+"</div>";
+}
+function renderTable(){
+  const cols=columns(),T=S.target/100;
+  let h="<thead><tr><th>Per eval sold</th>"+cols.map(c=>`<th class="${c.boost?"boostcol":""}">${c.v.id} ${c.boost?"+ boost":""}<small>${c.v.name}</small></th>`).join("")+"</tr></thead><tbody>";
+  ROWS.forEach(row=>{
+    if(row[0]==="grp"){h+=`<tr class="grp"><td colspan="${cols.length+1}">${row[1]}</td></tr>`;return;}
+    const [k,label,fmt,cls]=row;
+    h+=`<tr class="${cls||""}"><td>${label}</td>`+cols.map(c=>{
+      let val;
+      if(k==="bar")val=miniBar(c.r);
+      else if(k==="mff"||k==="vest")val=compCell(k,c.vi);
+      else if(k==="vs")val=vsCell(c.vi,c.r.paid);
+      else if(k==="ratio"){const ok=c.r.ratio<=T;val=`<span class="${ok?"good":"bad"}">${pct(c.r.ratio)}</span>`;}
+      else val=fmt(c.r[k]);
+      return `<td class="${c.boost?"boostcol":""}">${val}</td>`;}).join("")+"</tr>";
+  });
+  $("ueTable").innerHTML=h+"</tbody>";
+  $("tableNote").textContent=sizeView==="blend"?"Blended across sizes by sales mix":`${SLAB[+sizeView]} account`;
+}
+function renderKpis(){
+  const o=overall(),T=S.target/100,ok=o.ratio<=T;
+  $("kpis").innerHTML=`
+   <div><strong class="${ok?"good":"bad"}">${pct(o.ratio)}</strong><span>Blended payout ratio vs ${S.target}% target</span></div>
+   <div><strong>${(o.change>0?"+":"")+pct(o.change,0)}</strong><span>Price change to hit target</span></div>
+   <div><strong>${usd(o.contrib,2)}</strong><span>Contribution per eval</span></div>
+   <div><strong>${pct(o.contribPct)}</strong><span>Contribution margin</span></div>
+   <div><strong>${usd(o.contrib*S.volume)}</strong><span>Monthly contribution at ${num(S.volume,0)} evals</span></div>`;
+}
+function renderHero(){
+  const cash=S.cash,fund=S.fund,firm=Math.max(0,100-cash-fund);
+  $("heroBar").innerHTML=`<div class="seg-trader" style="width:${cash}%">$${cash*10}</div><div class="seg-fund" style="width:${fund}%">$${fund*10}</div><div class="seg-firm" style="width:${firm}%">$${firm*10}</div>`;
+  $("heroLegend").innerHTML=`
+   <div><b><i class="dot" style="background:var(--trader)"></i>${cash}% paid to trader</b><span>Cash, once a day at any time. Small and frequent.</span></div>
+   <div><b><i class="dot" style="background:var(--fund)"></i>${fund}% to the trader's A-book fund</b><span>Comes out of the firm's ${100-cash}%. Becomes first-loss capital on live accounts.</span></div>
+   <div><b><i class="dot" style="background:var(--cobalt)"></i>${firm}% kept by the firm</b><span>Headline split is ${cash}/${100-cash}. The firm's share pays for the fund.</span></div>`;
+  $("ruleSplit").textContent=`${cash}/${100-cash}. Out of the firm's ${100-cash}%, ${fund}% goes to the trader's A-book fund and the firm keeps ${firm}%.`;
+  $("stepFund").textContent=`On every gross payout, ${fund}% from the firm's share goes into the trader's fund. The trader still receives their full ${cash}% in cash.`;
+  $("stepUnlock").textContent=`When the fund hits ${usd(S.unlockUsd)}, the trader unlocks live accounts. At a ${S.fund}% fund rate, that means ${usd(P0(S.fund)?S.unlockUsd/P0(S.fund):0)} of gross payouts.`;
+  $("stepLive").textContent=`The fund becomes a ${S.liveDD}% static drawdown. Live allocation equals the fund divided by ${S.liveDD}%. The trader can spread it across up to ${S.maxAcc} accounts.`;
+  $("stepSplit").textContent=`Profits on live accounts are split ${S.liveSplit}% to the trader and ${100-S.liveSplit}% to the firm. Positions are real and A-booked.`;
+  $("stepCool").textContent=`If live losses use up the fund, the trader goes on a ${S.cooldown}-week cooldown before they can re-enter the live programme.`;
+}
+function renderExample(){
+  const bal=SIZES[exSize],P=x=>x/100,g=bal*P(S.payPct);
+  const fundPer=g*P(S.fund),need=S.unlockUsd,payouts=fundPer?Math.ceil(need/fundPer):0,grossNeed=P(S.fund)?need/P(S.fund):0;
+  const liveAlloc=P(S.liveDD)?need/P(S.liveDD):0,per=liveAlloc/S.maxAcc;
+  $("exGrid").innerHTML=`
+   <div><strong>${usd(g)}</strong><span>Typical gross payout (${S.payPct}% of ${SLAB[exSize]})</span></div>
+   <div><strong>${usd(g*P(S.cash))} / ${usd(fundPer)} / ${usd(g*(1-P(S.cash)-P(S.fund)))}</strong><span>Cash / fund / firm on each payout</span></div>
+   <div><strong>${usd(need)}</strong><span>Fund needed to unlock</span></div>
+   <div><strong>${num(payouts,0)} payouts</strong><span>On one ${SLAB[exSize]} account, or ${usd(grossNeed)} of gross payouts in total</span></div>
+   <div><strong>${usd(liveAlloc)}</strong><span>Live allocation at a ${S.liveDD}% static drawdown</span></div>
+   <div><strong>${S.maxAcc} × ${usd(per)}</strong><span>If split evenly, each with ${usd(per*P(S.liveDD))} drawdown</span></div>`;
+  const mult=bal?grossNeed/bal:0;
+  $("exCallout").textContent=`Unlocking takes ${usd(grossNeed)} of gross payouts. That is ${num(mult*100,0)}% of a ${SLAB[exSize]} balance, so most traders will get there across several accounts. Only top traders will reach it, which keeps the live book small and selective. Every graduate gets the same ${usd(liveAlloc)} of live capital at a ${S.liveDD}% static drawdown.`;
+}
+function segs(el,items,get,set){
+  el.innerHTML=items.map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${String(get()===v)}">${l}</button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{set(b.dataset.v);render();}));
+}
+function render(){
+  segs($("sizeSel"),[["0","$5K"],["1","$10K"],["2","$25K"],["3","$50K"],["blend","Blended"]],()=>sizeView,v=>sizeView=v);
+  segs($("exSize"),[["0","$5K"],["1","$10K"],["2","$25K"],["3","$50K"]],()=>String(exSize),v=>exSize=+v);
+  renderHero();renderExample();renderKpis();renderTable();
+  try{document.dispatchEvent(new CustomEvent("limitless:prices",{detail:S.prices}));}catch(e){}
+}
+$("resetBtn").addEventListener("click",()=>{S=structuredClone(DEF);try{localStorage.removeItem(KEY);}catch(e){}buildInputs();render();});
+buildInputs();render();
+
+window.LimitlessUE={getPrices:()=>S.prices};
+
+})();
+</script>
+<script>
+(()=>{
+
+const SIZES=[5000,10000,25000,50000], LAB=["$5K","$10K","$25K","$50K"];
+// list prices [noDLL][cons] by size. Draft prices solved for a 60% payout ratio.
+const PRICES={
+  "0-0":[51,114,335,755],
+  "0-1":[47,104,293,660],
+  "1-0":[28,62,177,392],
+  "1-1":[24,50,152,329]
+};
+
+const VKEYS=["0-0","0-1","1-0","1-1"];
+function syncPrices(arr){if(!arr)return;VKEYS.forEach((k,i)=>{if(arr[i])PRICES[k]=arr[i].slice();});}
+if(window.LimitlessUE)syncPrices(window.LimitlessUE.getPrices());
+document.addEventListener("limitless:prices",e=>{syncPrices(e.detail);if(typeof render==="function")render();});
+const VNAME={"0-0":"No daily limit, no consistency","0-1":"No daily limit, 50% consistency","1-0":"3% daily limit, no consistency","1-1":"3% daily limit, 50% consistency"};
+const LEV=[["Indices",20,40],["Gold",10,20],["Oil",5,10],["Crypto majors",10,20],["Total exposure",20,40]];
+const boostPrice=p=>Math.ceil(p*1.2/10)*10-1;
+const st={size:2,dll:0,cons:0,boost:0,tblBoost:false};
+const $=id=>document.getElementById(id);
+const usd=v=>"$"+v.toLocaleString("en-US");
+
+function renderTable(){
+  let h="<thead><tr><th></th>"+LAB.map((l,i)=>`<th><b>${l}</b>account</th>`).join("")+"</tr></thead><tbody>";
+  ["0-0","0-1","1-0","1-1"].forEach(k=>{
+    const [d,c]=k.split("-").map(Number);
+    h+=`<tr><th>${d?"3% daily limit":"No daily limit"}<small>${c?"50% eval consistency":"No consistency"}</small></th>`;
+    PRICES[k].forEach((p,i)=>{
+      const v=st.tblBoost?boostPrice(p):p;
+      const sel=st.size===i&&st.dll===d&&st.cons===c&&st.boost===(st.tblBoost?1:0);
+      h+=`<td><button class="cellbtn" aria-pressed="${sel}" data-k="${k}" data-i="${i}" aria-label="${LAB[i]}, ${VNAME[k]}${st.tblBoost?", with boost":""}: ${usd(v)}">${usd(v)}</button></td>`;
+    });
+    h+="</tr>";
+  });
+  $("priceTable").innerHTML=h+"</tbody>";
+  $("priceTable").querySelectorAll(".cellbtn").forEach(b=>b.addEventListener("click",()=>{
+    const [d,c]=b.dataset.k.split("-").map(Number);
+    Object.assign(st,{size:+b.dataset.i,dll:d,cons:c,boost:st.tblBoost?1:0});render();
+    document.querySelector(".config").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"});
+  }));
+}
+function opts(el,items,key,cls=""){
+  el.innerHTML=items.map(([v,t,s])=>`<button type="button" class="opt ${cls}" aria-pressed="${st[key]===v}" data-v="${v}"><b>${t}</b><span>${s}</span></button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{st[key]=+b.dataset.v;render();}));
+}
+
+const PROMO=0.30, CODE="OCT";
+const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.2 4.8 9.4 10 10-5.2.6-9.4 4.8-10 10-.6-5.2-4.8-9.4-10-10C7.2 11.4 11.4 7.2 12 2z" fill="#FF4F40"/></svg>';
+const COPY='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="13" height="13" rx="1"/><path d="M4 16V4h12"/></svg>';
+const openFunded=new Set();
+function pcSeg(el,items,key){
+  el.innerHTML=items.map(([v,t])=>`<button type="button" aria-pressed="${st[key]===v}" data-v="${v}">${t}</button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{st[key]=+b.dataset.v;render();}));
+}
+function renderCards(){
+  const abList=PRICES["1-1"].map(p=>Math.max(p+1,Math.round(p/(1-PROMO)/10)*10-1));
+  if($("abPriceHead"))$("abPriceHead").textContent=usd(abList[2]);
+  if($("abPrices"))$("abPrices").textContent=`Full list price for the 3% daily limit, 50% consistency version: ${LAB.map((l,i)=>`${l} ${usd(abList[i])}`).join(", ")}. Shown on $25K above.`;
+  pcSeg($("pcDll"),[[0,"None"],[1,"3%"]],"dll");
+  pcSeg($("pcCons"),[[0,"None"],[1,"50%"]],"cons");
+  pcSeg($("pcLev"),[[0,"Standard"],[1,"Boost"]],"boost");
+  const k=`${st.dll}-${st.cons}`;
+  $("cards").innerHTML=SIZES.map((bal,i)=>{
+    const lp=PRICES[k][i],sale=st.boost?boostPrice(lp):lp,list=Math.max(sale+1,Math.round(sale/(1-PROMO)/10)*10-1),save=list-sale,lab=LAB[i].replace("$","");
+    const rows=[
+      ["Profit Target",usd(bal*0.10),false],
+      ["Daily DD",st.dll?usd(bal*0.03):"None",!!st.dll],
+      ["Max Loss",usd(bal*0.05),false],
+      ["Drawdown Type","Static",false],
+      ["Eval Consistency",st.cons?"50%":"None",!!st.cons],
+      ["Leverage",st.boost?"40:1":"20:1",!!st.boost]
+    ];
+    const open=openFunded.has(i);
+    return `<article class="pcard ${i===2?"pop":""}">
+      ${i===2?'<div class="badge">Most popular</div>':""}
+      <div class="pc-head">
+        <h3 class="pc-title">${lab}<span>Evaluation</span></h3>
+        <div class="pc-price"><s>${usd(list)}</s><strong>${usd(sale)}</strong><em>one time fee</em></div>
+      </div>
+      <ul class="pc-rows">${rows.map(([a,b,c])=>`<li class="${c?"chg":""}"><span>${a}</span><span>${b}</span></li>`).join("")}</ul>
+      <div class="pc-foot">
+        <button type="button" class="pc-link" data-f="${i}" aria-expanded="${open}">${open?"Hide":"View"} Funded Rules</button>
+        ${open?`<div class="pc-funded"><ul>
+          <li>Max loss ${usd(bal*0.05)}, static. Floor stays at ${usd(bal*0.95)}.</li>
+          <li>${st.dll?`Daily loss limit ${usd(bal*0.03)} carries into funded.`:"No daily loss limit."}</li>
+          <li>No consistency rule on funded.</li>
+          <li>75% profit split, plus 10% into your A-book fund.</li>
+          <li>Funded account activates in real time when you pass.</li>
+          <li>Payouts once a day, any time. Min ${usd(bal>=25000?250:100)}. No caps.</li>
+          <li>High-impact news restricted.</li>
+          <li>Up to $100K active funded allocation on Limitless. $300K across all 24/7 plans.</li>
+          <li>Max 15 funded account activations per rolling 30 days.</li>
+          <li>$10K A-book fund unlocks $50K live capital.</li>
+          <li>Blowing a live account means a 4-week cooldown.</li>
+        </ul></div>`:""}
+        <button type="button" class="pc-cta" data-s="${i}">Start With ${lab} ${STAR}</button>
+        <button type="button" class="pc-code" data-c="${i}" aria-label="Copy code ${CODE}">Save ${usd(save)} with code ${CODE} ${COPY}</button>
+      </div>
+    </article>`;}).join("");
+  $("cards").querySelectorAll("[data-f]").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.f;openFunded.has(i)?openFunded.delete(i):openFunded.add(i);renderCards();}));
+  $("cards").querySelectorAll("[data-s]").forEach(b=>b.addEventListener("click",()=>{st.size=+b.dataset.s;render();document.querySelector(".config").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"});}));
+  $("cards").querySelectorAll("[data-c]").forEach(b=>b.addEventListener("click",()=>{try{navigator.clipboard.writeText(CODE);}catch(e){}const t=b.firstChild;b.firstChild.textContent="Copied ";setTimeout(()=>renderCards(),1200);}));
+}
+function base(){return PRICES[`${st.dll}-${st.cons}`][st.size];}
+function render(){
+  const k=`${st.dll}-${st.cons}`,full=PRICES["0-0"][st.size];
+  opts($("optSize"),SIZES.map((s,i)=>[i,LAB[i],"from "+usd(PRICES["1-1"][i])]),"size");
+  const noDll=PRICES[`0-${st.cons}`][st.size],withDll=PRICES[`1-${st.cons}`][st.size];
+  opts($("optDll"),[[0,"None","Trade without a daily stop"],[1,"3% daily limit",`Save ${usd(noDll-withDll)}`]],"dll");
+  const noC=PRICES[`${st.dll}-0`][st.size],withC=PRICES[`${st.dll}-1`][st.size];
+  opts($("optCons"),[[0,"None","Pass on any day mix"],[1,"50% rule",`Save ${usd(noC-withC)}`]],"cons");
+  const b=base();
+  opts($("optLev"),[[0,"Standard","Up to 20x"],[1,"Boost","Up to 40x, +"+usd(boostPrice(b)-b)]],"boost","boost");
+  $("levTable").innerHTML="<thead><tr><th>Market</th><th>Standard</th><th>Boost</th></tr></thead><tbody>"+LEV.map(([m,a,c])=>`<tr><td>${m}</td><td class="${st.boost?"":"on"}">${a}x</td><td class="${st.boost?"on":""}">${c}x</td></tr>`).join("")+"</tbody>";
+
+  const bal=SIZES[st.size],price=st.boost?boostPrice(b):b;
+  $("sumSize").textContent=usd(bal)+" account";
+  $("sumPrice").textContent=usd(price);
+  const parts=[`Base ${usd(full)}`];
+  if(st.dll)parts.push(`daily limit −${usd(PRICES[`0-${st.cons}`][st.size]-PRICES[`1-${st.cons}`][st.size])}`);
+  if(st.cons)parts.push(`consistency −${usd(PRICES[`${st.dll}-0`][st.size]-PRICES[`${st.dll}-1`][st.size])}`);
+  if(st.boost)parts.push(`boost +${usd(boostPrice(b)-b)}`);
+  $("sumBreak").textContent=parts.join(", ");
+  const minPay=bal>=25000?250:100;
+  const rules=[
+    ["Profit target",`${usd(bal*0.10)} (10%)`],
+    ["Max loss",`${usd(bal*0.05)}, static`],
+    ["Account fails at",usd(bal*0.95)],
+    ["Daily loss limit",st.dll?`${usd(bal*0.03)} (3%)`:"None"],
+    ["Eval consistency",st.cons?"Best day max 50%":"None"],
+    ["Max leverage",st.boost?"40x total":"20x total"],
+    ["Time limit","None"],
+    ["Profit split","75% + 10% to A-book fund"],
+    ["Payouts",`Once a day, any time, min ${usd(minPay)}, no caps`],
+    ["Funded activation","Real time"],
+    ["Funded allocation","Up to $100K active"],
+    ["Funded activations","15 per rolling 30 days"]
+  ];
+  $("sumRules").innerHTML=rules.map(([a,c])=>`<li><span>${a}</span><span>${c}</span></li>`).join("");
+  st.tblBoost=!!st.boost;
+  $("tblBoost").setAttribute("aria-checked",String(st.tblBoost));
+  renderTable();
+  renderCards();
+  $("toast").textContent="";
+}
+$("tblBoost").addEventListener("click",()=>{st.tblBoost=!st.tblBoost;st.boost=st.tblBoost?1:0;render();});
+$("cta").addEventListener("click",()=>{$("toast").textContent="Example only. Checkout is not connected.";});
+render();
+
+})();
+</script>
+<script>
+(()=>{
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+function show(id,push){
+  tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+  if(push){try{history.replaceState(null,'',id==='plan'?location.pathname+location.search:'#economics');}catch(e){}}
+  window.scrollTo(0,0);
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener('click',()=>show(t.getAttribute('aria-controls'),true));
+  t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();n.click();}});
+});
+if(location.hash==='#economics')show('economics',false);
+})();
+</script>
+</body>
+</html>

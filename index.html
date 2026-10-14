@@ -1,0 +1,3125 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Forex Prop Trading Firm - Tradeify FX</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+    <script>
+      (function () {
+        "use strict";
+
+        const COOKIE_NAME = "forwarded_url_params";
+        const COOKIE_DAYS = 30;
+        const TARGET_SELECTOR =
+          "a[href],area[href], button[href], [data-href], [data-url], #nav-sign-in, [data-react], .pcard-button";
+        let lastSavedValue = null;
+
+        function readCookie(name) {
+          const prefix = name + "=";
+          const entry = document.cookie
+            .split(";")
+            .map((part) => part.trim())
+            .find((part) => part.startsWith(prefix));
+          if (!entry) return null;
+          try {
+            return decodeURIComponent(entry.slice(prefix.length));
+          } catch (_) {
+            return null;
+          }
+        }
+
+        // Replace each matching key as a group, retaining repeated and empty values.
+        function mergeParams(target, source) {
+          const keys = new Set(source.keys());
+          keys.forEach((key) => {
+            target.delete(key);
+            source.getAll(key).forEach((value) => target.append(key, value));
+          });
+          return target;
+        }
+
+        function rememberParams() {
+          const params = new URLSearchParams(readCookie(COOKIE_NAME) || "");
+
+          // Keep compatibility with the previous script's standalone ref cookie.
+          const legacyRef = readCookie("ref");
+          if (!params.has("ref") && legacyRef !== null)
+            params.set("ref", legacyRef);
+          mergeParams(params, new URLSearchParams(window.location.search));
+
+          const value = encodeURIComponent(params.toString());
+          if (params.size && value !== lastSavedValue) {
+            const secure =
+              window.location.protocol === "https:" ? "; Secure" : "";
+            document.cookie =
+              COOKIE_NAME +
+              "=" +
+              value +
+              "; Max-Age=" +
+              COOKIE_DAYS * 24 * 60 * 60 +
+              "; Path=/; SameSite=Lax" +
+              secure;
+            // If the browser refuses the cookie, keep forwarding the current URL values.
+            if (readCookie(COOKIE_NAME) === params.toString())
+              lastSavedValue = value;
+          }
+          return params;
+        }
+
+        function withParams(href, params) {
+          if (typeof href !== "string") return href;
+          const trimmed = href.trim();
+          // Preserve in-page controls and non-web actions such as mailto/tel/javascript.
+          if (!trimmed || trimmed.startsWith("#")) return href;
+          let url;
+          try {
+            url = new URL(href, document.baseURI);
+          } catch (_) {
+            return href;
+          }
+          if (url.protocol !== "http:" && url.protocol !== "https:")
+            return href;
+          if (!params.size) return href;
+          mergeParams(url.searchParams, params);
+          return url.href;
+        }
+
+        // Use for custom button handlers, e.g.:
+        // window.location.assign(window.carryForwardParams('/checkout?plan=pro'));
+        // Native location.assign/location.href redirects cannot be intercepted reliably.
+        window.carryForwardParams = function (href) {
+          return withParams(href, rememberParams());
+        };
+
+        function updateTarget(element, params) {
+          if (element.hasAttribute("download")) return;
+          ["href", "data-href", "data-url"].forEach((attribute) => {
+            if (!element.hasAttribute(attribute)) return;
+            const original = element.getAttribute(attribute);
+            const updated = withParams(original, params);
+            if (updated !== original) element.setAttribute(attribute, updated);
+          });
+        }
+
+        function updateTree(root, params) {
+          if (root.nodeType === 1 && root.matches(TARGET_SELECTOR))
+            updateTarget(root, params);
+          if (root.querySelectorAll) {
+            root
+              .querySelectorAll(TARGET_SELECTOR)
+              .forEach((element) => updateTarget(element, params));
+          }
+        }
+
+        // Save immediately, even if the visitor never clicks a link.
+        rememberParams();
+
+        // Capture phase updates destinations before ordinary click handlers run.
+        function prepareNavigation(event) {
+          const element =
+            event.target.closest && event.target.closest(TARGET_SELECTOR);
+          if (!element) return;
+          updateTarget(element, rememberParams());
+
+          // Anchors retain native behavior, including Ctrl/Cmd-click and target="_blank".
+          // A plain button needs navigation unless its own handler already performs it.
+          if (
+            event.type !== "click" ||
+            event.button !== 0 ||
+            element.tagName !== "BUTTON"
+          )
+            return;
+          const destination =
+            element.getAttribute("href") ||
+            element.getAttribute("data-href") ||
+            element.getAttribute("data-url");
+          if (!destination || element.disabled || element.form) return;
+          queueMicrotask(function () {
+            // A custom button handler can preventDefault() to take ownership.
+            if (event.defaultPrevented) return;
+            let url;
+            try {
+              url = new URL(destination, document.baseURI);
+            } catch (_) {
+              return;
+            }
+            if (url.protocol === "http:" || url.protocol === "https:") {
+              if (element.getAttribute("target") === "_blank") {
+                window.open(url.href, "_blank", "noopener");
+              } else {
+                window.location.assign(url.href);
+              }
+            }
+          });
+        }
+        ["click", "auxclick", "contextmenu"].forEach((eventName) => {
+          document.addEventListener(eventName, prepareNavigation, true);
+        });
+
+        function initialize() {
+          updateTree(document, rememberParams());
+          // Covers links rendered later by React or other page scripts.
+          new MutationObserver(function (records) {
+            const params = rememberParams();
+            records.forEach((record) => {
+              if (record.type === "attributes") {
+                if (record.target.matches(TARGET_SELECTOR))
+                  updateTarget(record.target, params);
+              } else {
+                record.addedNodes.forEach((node) => updateTree(node, params));
+              }
+            });
+          }).observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ["href", "data-href", "data-url"],
+          });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initialize, {
+            once: true,
+          });
+        } else {
+          initialize();
+        }
+      })();
+    </script>
+    <!--getCountryCode-->
+    <script>
+      let countryCode = "others";
+      async function getCountryCode(retries = 2) {
+        //check cookie first
+        /*function ggetCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.indexOf(name + '=') === 0) {
+            return decodeURIComponent(cookie.substring(name.length + 1));
+          }
+        }
+        return null;
+      }
+      const consent = ggetCookie('tracking_consent');
+      if (!consent) return countryCode;*/
+
+        const url = "https://countries.dev/ip";
+        for (let attempt = 0; attempt <= retries; attempt++) {
+          try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => {
+              controller.abort();
+            }, 5000);
+            const response = await fetch(url, {
+              signal: controller.signal,
+            });
+            clearTimeout(timeout);
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            // Only update after successful API response
+            if (data?.countryCode) {
+              countryCode = data.countryCode;
+              countryName = data.country.name;
+            }
+            return {
+              code: data.countryCode,
+              name: data.country?.name,
+              flags: data.country?.flags,
+              timezones: data.country?.timezones,
+            };
+          } catch (error) {
+            console.warn(`Country API attempt ${attempt + 1} failed:`, error);
+            if (attempt < retries) {
+              await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
+          }
+        }
+        // If all attempts fail, keep the default value
+        return countryCode;
+      }
+      getCountryCode().then((code) => {
+        console.log("Country details:", code);
+      });
+    </script>
+    <link
+      href="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/css/tradeifx.shared.c832351ea.min.css"
+      rel="stylesheet"
+      type="text/css"
+      integrity="sha384-yDI1HqzjWuSp3W9AS4rbwQbOQvZRTsHeQsweHkIksoyI7Uw4NDgNppknl4kW9lx4"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      #cookie-popup {
+        position: fixed;
+        display: none;
+      }
+
+      .prt-card-filpper,
+      .prt-card-faces {
+        position: absolute;
+        height: 100%;
+      }
+
+      .prt-card-faces.back {
+        transform: rotateY(180deg);
+      }
+
+      html.nav-open {
+        overflow: hidden !important;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px #28292f inset !important;
+      }
+
+      input:-webkit-autofill {
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      h1:last-child,
+      h2:last-child,
+      h3:last-child,
+      h4:last-child,
+      h5:last-child,
+      h6:last-child {
+        margin-bottom: 0;
+      }
+
+      ul li:last-child {
+        margin-bottom: 0;
+      }
+
+      .main-header {
+        position: absolute;
+      }
+
+      .main-header.scroll .nav-out {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .main-header:after {
+        position: absolute;
+        clear: both;
+        content: "";
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: block;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          rgba(22, 116, 137, 0.3) 0%,
+          rgba(131, 212, 230, 0.3) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .main-header.scroll:after {
+        opacity: 0.25;
+      }
+
+      .page-menu-item:last-child {
+        padding-right: 0;
+      }
+
+      .page-menu-item:first-child {
+        padding-left: 0;
+      }
+
+      .page-menu-link.w--current {
+        color: var(--_base---nitrogen);
+      }
+
+      .nav-toggle.open .nav-tgl-line.first {
+        transform: translate(1px, 8px) rotate(45deg);
+      }
+
+      .nav-toggle.open .nav-tgl-line.middle {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      .nav-toggle.open .nav-tgl-line.last {
+        transform: translate(1px, -7px) rotate(-45deg);
+      }
+
+      .nav-quick-line {
+        opacity: 0;
+      }
+
+      .nav-quick-link.active .nav-quick-line {
+        opacity: 1;
+      }
+
+      .label-rotator-inner {
+        will-change: transform;
+        animation: rotateBg 5s ease-in-out infinite;
+      }
+
+      @keyframes rotateBg {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .page-btn:not(.disable):hover .page-btn-inner {
+        background: #0d0e10;
+        box-shadow: inset -10px 10px 25px 0px rgb(159 170 206 / 10%);
+      }
+
+      .anim-label.quick-tag:hover .anim-label-inner {
+        background-color: rgba(5, 13, 19, 0.7);
+        backdrop-filter: blur(15px);
+      }
+
+      .fancybox__backdrop {
+        background: rgba(0, 0, 0, 0.5) !important;
+        backdrop-filter: blur(10px) !important;
+      }
+
+      [data-copy].disabled {
+        pointer-events: none !important;
+      }
+
+      .tdfy-style-btn > *:not(input) {
+        pointer-events: none;
+      }
+
+      .tdfy-style-border:after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+        left: 0px;
+        top: 0px;
+        z-index: 20;
+        filter: blur(6px);
+        background:
+          linear-gradient(transparent, transparent) padding-box,
+          linear-gradient(90deg, rgb(175 255 100 / 6%) 44.45%, #00b1d0 98.59%)
+            border-box;
+      }
+
+      .tdfy-style-border-right {
+        transform: translate(-50%, -50%) scaleX(1) scaleY(1);
+      }
+
+      .tdfy-style-border-left {
+        transform: translate(-50%, -50%) scaleX(-1) scaleY(-1);
+      }
+
+      .tdfy-style-border-light {
+        background:
+          linear-gradient(transparent, transparent) padding-box,
+          linear-gradient(
+              90deg,
+              rgb(153 188 143 / 10%) 44.66%,
+              rgb(134 233 99 / 10%) 58.55%,
+              #00b1d0 100%
+            )
+            border-box;
+      }
+
+      .progress-bar {
+        --progress: 0;
+        --line-width: 1px;
+        --gap: 3px;
+      }
+
+      .progress-bar::before,
+      .progress-bar::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-size: calc(var(--line-width) + var(--gap)) 100%;
+      }
+
+      .progress-bar::before {
+        background-image: repeating-linear-gradient(
+          to right,
+          #3b6065 0,
+          #3b6065 var(--line-width),
+          transparent var(--line-width),
+          transparent calc(var(--line-width) + var(--gap))
+        );
+      }
+
+      .progress-bar::after {
+        width: calc(var(--progress) * 1%);
+        background-image: repeating-linear-gradient(
+          to right,
+          #83d4e6 0,
+          #83d4e6 var(--line-width),
+          transparent var(--line-width),
+          transparent calc(var(--line-width) + var(--gap))
+        );
+        transition: width 0.5s ease;
+      }
+
+      .lines-anim canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .fx-howitwork-iconwrap::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 0px 4px 4px #83d4e680;
+        animation: rotateShadow 8s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes rotateShadow {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .fx-footer-social-link:hover img {
+        filter: brightness(0) invert(1);
+        mix-blend-mode: plus-lighter;
+      }
+
+      .fx-footer-social-link:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        background-color: var(--_base---nitrogen);
+        border-radius: 50%;
+        transform-origin: 50% 50%;
+        transition: 300ms all ease;
+        opacity: 0;
+        z-index: 1;
+      }
+
+      .fx-footer-social-link:hover:after {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+
+      .fx-faq-answer-toggle:not(.active-content) {
+        height: 0;
+        overflow: hidden;
+        will-change: height;
+      }
+
+      .fx-faq-head.active-header .fx-faq-plus {
+        color: #bbcac7;
+      }
+
+      .live-now-slider .slick-dots {
+        bottom: 32px;
+        right: 34px;
+        left: auto;
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 10;
+        position: absolute;
+        margin: 0;
+      }
+
+      .live-now-slider .slick-dots li {
+        margin: 0;
+        width: 16px;
+        height: 4px;
+        padding: 0;
+        display: inline-block;
+      }
+
+      .live-now-slider .slick-dots li button {
+        width: 16px;
+        height: 4px;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.24);
+        border-radius: 100px;
+        border: none;
+        outline: none;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        display: block;
+        z-index: 10;
+      }
+
+      .live-now-slider .slick-dots li button .dot-fill {
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: #83d4e6;
+        box-shadow: 0px 0px 8px rgba(131, 212, 230, 0.5);
+        border-radius: 100px;
+      }
+
+      .live-now-slider .slick-dots li.slick-active button .dot-fill {
+        animation: fillProgress 5000ms linear forwards;
+      }
+
+      .live-now-slider.paused .slick-dots li.slick-active button .dot-fill {
+        animation-play-state: paused !important;
+      }
+
+      @keyframes fillProgress {
+        from {
+          width: 0%;
+        }
+
+        to {
+          width: 100%;
+        }
+      }
+
+      .live-now-slider .slick-dots li.slick-active button,
+      .live-now-slider .slick-dots li.slick-active {
+        width: 40px;
+      }
+
+      .live-now-rgt-col:nth-last-child(-n + 2) {
+        border: none;
+      }
+
+      .live-now-rgt-col:nth-child(even) .live-now-rgt-card {
+        border-right: none;
+      }
+
+      .live-now-rgt-col:nth-child(odd) .live-now-rgt-card {
+        padding-left: 0;
+      }
+
+      .tt_top_box {
+        opacity: 0;
+        position: absolute;
+        transform: translateY(10px);
+      }
+
+      .tt_tip_wrp:hover .tt_top_box {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* .payout-slider .slick-list {
+    padding: 0 3% !important;
+  } */
+
+      /* .payout-slider-items.slick-slide.slick-current  */
+
+      .payout-slider-main-wrp .swiper-slide {
+        transition: all 200ms linear;
+        transform: scale(0.9);
+
+        &.swiper-slide-active {
+          transform: scale(1.05);
+        }
+      }
+
+      .payout-slider-main-wrp .swiper-slide.swiper-slide-prev {
+        margin-left: -20px;
+      }
+
+      .payout-slider-main-wrp .swiper-slide.swiper-slide-next {
+        margin-right: -20px !important;
+      }
+
+      .tt_top_box:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        margin-top: -1px;
+        left: 5px;
+        border-left: 5px solid transparent;
+        border-top: 5px solid #4c4b4b;
+        border-right: 5px solid transparent;
+      }
+
+      .market-var-value.positive {
+        color: #57df75;
+      }
+
+      .market-var-value.positive {
+        color: #57df75;
+      }
+
+      .market-var-value.negative {
+        color: #fa7071;
+      }
+
+      .market-slider {
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .market-slider.is-filtering {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .market-slider .slick-list {
+        padding: 0 4%;
+      }
+
+      .support-card-btn:hover .support-card-btn-arr {
+        transform: rotate(0);
+      }
+
+      .support-card-btn:hover .support-card-btn-inn {
+        background-color: #83d4e6;
+      }
+
+      .live-now-slider,
+      .live-now-slider .slick-list,
+      .live-now-slider .slick-track {
+        height: 100%;
+      }
+
+      .live-now-slider .slick-track {
+        display: flex;
+      }
+
+      .fx-banner-title.waitlist.cmn-sn br {
+        display: none;
+      }
+
+      .main-header.fixed.transparent.cmn-main-header.w-nav.scroll {
+        backdrop-filter: blur(12px);
+      }
+
+      .simple-steps-card-new::before {
+        content: "";
+        position: absolute;
+        top: 110px;
+        right: -5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(0, 223, 255, 0.8);
+        box-shadow: 0 2px 5px #00dfff33;
+      }
+
+      .simple-steps-card-new::after {
+        content: "";
+        position: absolute;
+        top: 110px;
+        left: -5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(0, 223, 255, 0.8);
+        box-shadow: 0 2px 5px #00dfff33;
+      }
+
+      .simple-steps-col:first-child .simple-steps-card-new::after {
+        display: none;
+      }
+
+      .simple-steps-col:last-child .simple-steps-card-new::before {
+        display: none;
+      }
+
+      .plan_select_acc_type::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+      }
+
+      /* Custom Scrollbar */
+      .pvc-list::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .pvc-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .pvc-list::-webkit-scrollbar-thumb {
+        background: #00dfff;
+        border-radius: 10px;
+      }
+
+      .pvc-list::-webkit-scrollbar-thumb:hover {
+        background: #00dfff;
+      }
+
+      /* Firefox */
+      html .pvc-list {
+        scrollbar-width: thin;
+        scrollbar-color: #00dfff #060913;
+      }
+
+      /*responsive*/
+      @media screen and (max-width: 1439px) {
+        .simple-steps-card-new::before,
+        .simple-steps-card-new::after {
+          top: 100px;
+        }
+      }
+
+      @media screen and (max-width: 991px) {
+        .main-header.fixed.scroll:has(.nav-announcement) {
+          transform: translateY(-92px);
+        }
+
+        .main-header.nav-open .nav-out {
+          background-color: var(--_base---black);
+          background-image: url(https://cdn.prod.website-files.com/69672f189aa5fe8adfa88c72/697316ea4d51af7192c7be16_Hero.png);
+          background-position: 0 0;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+        }
+
+        .pvc-left {
+          max-height: calc(100dvh - 65px);
+          position: fixed;
+          top: 65px;
+          left: 0;
+          pointer-events: none;
+          opacity: 0;
+          transform: translateX(-110%);
+          z-index: 999;
+          height: 100%;
+        }
+
+        .pvc-left.open {
+          pointer-events: all;
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        .simple-steps-card-new::before {
+          top: auto;
+          right: auto;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: -6px;
+        }
+
+        .simple-steps-card-new::after {
+          bottom: auto;
+          right: auto;
+          left: 50%;
+          transform: translateX(-50%);
+          top: -6px;
+        }
+
+        .main-header.fixed.scroll:has(.nav-announcement) {
+          transform: translateY(-120px);
+        }
+      }
+
+      @media screen and (max-width: 575px) {
+      }
+
+      @media screen and (max-width: 479px) {
+        .main-header.fixed.scroll:has(.nav-announcement) {
+          transform: translateY(-92px);
+        }
+
+        .main-header.scroll .nav-out {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+
+        div#tp-widget-logo {
+          margin-top: -8px !important;
+        }
+
+        .payout-slider-main-wrp .swiper-slide {
+          transition: all 200ms linear;
+          transform: scale(0.9);
+
+          &.swiper-slide-active {
+            transform: scale(1.09);
+          }
+        }
+
+        .payout-slider-main-wrp .swiper-slide.swiper-slide-prev {
+          margin-left: 0;
+        }
+
+        .payout-slider-main-wrp .swiper-slide.swiper-slide-prev {
+          margin-left: 0;
+        }
+
+        .market-slider .slick-list {
+          padding: 0 6%;
+        }
+
+        .fx-platform-title.comm-fx-platform-title br {
+          display: none;
+        }
+
+        .switched-list-slider-items.slick-slide {
+          height: auto;
+        }
+
+        .switched-list-slider .slick-track {
+          display: flex;
+        }
+
+        .switched-list-slider .slick-list {
+          padding: 40px 16%;
+        }
+
+        .switched-list-slider-items.slick-current .switched-card {
+          transform: scale(1.16);
+        }
+
+        .fx-banner-title.waitlist.cmn-sn br {
+          display: block;
+        }
+
+        .main-header.fixed.transparent.cmn-main-header.w-nav.scroll
+          .nav-out.cmn-sn-nav-out {
+          padding: 8px 0;
+        }
+
+        .live-now-slider.lnd-pg-live-now-slider .slick-dots {
+          bottom: 170px;
+          right: auto;
+          left: 50%;
+          padding: 0;
+          transform: translateX(-50%);
+          justify-content: center;
+        }
+
+        .fx-banner-title.waitlist.font-monasanssemi .fx-blue-text br {
+          display: none;
+        }
+      }
+
+      @media screen and (max-width: 399px) {
+        .stat-col {
+          width: 100%;
+        }
+
+        .stat-row.home-new {
+          flex-wrap: wrap;
+        }
+
+        .stat-col-line {
+          width: 100%;
+          height: 1px;
+        }
+
+        h2,
+        .fx-howitwork-title.home-new,
+        .fx-platform-title {
+          font-size: 28px;
+        }
+
+        .live-now-title-wrap {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .live-now-slider .slick-dots {
+          bottom: 15px;
+          right: 30px;
+        }
+
+        .live-now-card {
+          padding-bottom: 50px;
+        }
+
+        .live-now-rgt-card-cont-head,
+        .fx-platform-subtitle.home-new,
+        .account-btm-col-left-head {
+          font-size: 20px;
+        }
+
+        .live-now-rgt-card {
+          padding: 12px 8px;
+        }
+
+        .live-now-rgt-wrp {
+          padding: 18px;
+        }
+
+        .filter-btn-txt {
+          font-size: 16px;
+        }
+
+        .count {
+          font-size: 14px;
+        }
+
+        .market-slider .slick-list {
+          padding: 0 3%;
+        }
+
+        .market-card-top {
+          padding-top: 12px;
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .account-btm-col-left-cont {
+          font-size: 10px;
+        }
+
+        .account-btm-col-left-box {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .account-btm-col-left-wrp {
+          margin-left: -12px;
+          margin-right: -12px;
+        }
+
+        .switch-col.switch-col-sm {
+          width: 100%;
+        }
+
+        .switch-col.switch-col-bg {
+          width: 100%;
+        }
+
+        .switch-col.switch-col-sm.fst .switch-list {
+          border-radius: 12px 12px 0 0;
+        }
+
+        .switch-card {
+          padding: 14px;
+          background: #00000061;
+        }
+
+        .switch-col.switch-col-sm.fst .switch-card {
+          border-radius: 12px 12px 0 0;
+        }
+
+        .switch-col.switch-col-sm.snd .switch-card {
+          border-radius: 0 0 12px 12px;
+        }
+
+        .switch-col.switch-col-sm.snd .switch-list {
+          border: 0 0 12px 12px;
+        }
+
+        .switched-list-slider .slick-list {
+          padding: 40px 8%;
+        }
+
+        .support-card-btm {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 16px;
+        }
+
+        .support-card-cont {
+          padding-right: 0;
+          margin-bottom: 12px;
+        }
+
+        .support-card-cont,
+        .support-card-cont.sm {
+          max-width: 100%;
+        }
+
+        .switch-col.switch-col-sm {
+          padding: 0 12px;
+        }
+
+        .comm-top-wrp {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .live-now-title-wrap.lnd-pg-live-now-title-wrap {
+          align-items: center;
+        }
+
+        .switch-card.switch-card-mid {
+          min-height: auto;
+        }
+
+        .switch-col.switch-col-sm.fst {
+          padding-bottom: 0;
+        }
+
+        .fx-faq-head-title.fx-faq-afftl-head,
+        .fx-faq-head-title.lnd-page {
+          font-size: 18px;
+        }
+
+        .trade-back-col.trade-crypto {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+      }
+
+      @media screen and (max-width: 374px) {
+        .header-splide {
+          width: 50%;
+        }
+
+        .announcement-list {
+          width: 50%;
+        }
+
+        .page-title.new-afft-page-title {
+          font-size: 26px;
+        }
+
+        .page-header,
+        .aftl-promote-txch-txt {
+          font-size: 14px;
+        }
+
+        .coms-num {
+          font-size: 30px;
+        }
+
+        .simple-steps-img-mb {
+          display: none;
+        }
+
+        .fx-faq-head-title.fx-faq-afftl-head {
+          font-size: 16px;
+        }
+
+        .faq-rch-txt {
+          font-size: 14px;
+        }
+
+        .fx-dicord-para {
+          font-size: 16px;
+        }
+
+        .simple-steps-body {
+          max-width: 100%;
+        }
+
+        .simple-steps-list {
+          max-width: 100% !important;
+          position: static;
+          padding: 8px;
+        }
+
+        .simple-steps-card-line {
+          display: none;
+        }
+
+        .simple-steps-card {
+          text-align: center;
+          padding: 20px;
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(6px);
+          border-radius: 8px;
+          display: flex;
+          justify-content: center;
+        }
+
+        .simple-steps-card-cont.simple-steps-card-cont-2,
+        .simple-steps-card-cont.simple-steps-card-cont-3 {
+          padding: 0;
+          text-align: center;
+          justify-content: center;
+        }
+
+        .simple-steps-body {
+          margin: -8px;
+          width: inherit;
+          max-width: none;
+        }
+
+        .simple-steps-card.simple-steps-card-3 {
+          justify-content: center;
+        }
+
+        .simple-steps-card-cont.simple-steps-card-cont-1 {
+          padding: 0;
+        }
+
+        .simple-steps-sec-main {
+          padding-bottom: 40px;
+        }
+
+        .tdfy-style-text {
+          font-size: 16px;
+        }
+
+        .earning-card {
+          min-height: 300px;
+        }
+
+        .afftl-earning-head-txt {
+          font-size: 18px;
+        }
+
+        .simple-steps-card-cont-box {
+          background-image: none;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        .fx-banner-title.waitlist {
+          font-size: 26px;
+        }
+
+        .main-header.transparent.cmn-main-header .brand-logo {
+          max-width: 92px;
+        }
+
+        .tdfy-style-text.lnd-pg-tdfy-style-text {
+          font-size: 11px;
+        }
+
+        .comm-top-card-head.lndn-pg {
+          font-size: 20px;
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+
+    <script src="data.js"></script>
+    <script src="custom.js"></script>
+  </head>
+
+  <body class="dark-body">
+    <section id="pricing" class="fx-pricing-section landing">
+      <img
+        loading="lazy"
+        src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a3a7005d9971084e006067c_pricing-bg.webp"
+        alt=""
+        class="prt-back-shadow"
+      />
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="center-title howitwork landing">
+          <h2 class="fx-howitwork-title home-new landing">
+            Choose Your <span class="fx-blue-text">Account Size</span>
+          </h2>
+          <p class="fx-platform-shortpara">
+            One upfront fee. No monthly billing. No activation costs. 30-day
+            inactivity rule applies.
+          </p>
+          <div class="pricing-head-list-wrppr">
+            <div class="new-live-capital-label">built for</div>
+            <ul role="list" class="pricing-head-list">
+              <li class="pricing-head-itm">
+                <div class="pricing-head-tag">Active Traders</div>
+              </li>
+              <li class="pricing-head-itm">
+                <div class="pricing-head-tag">Long-Term Traders</div>
+              </li>
+              <li class="pricing-head-itm">
+                <div class="pricing-head-tag">Experienced Traders</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pricing-container">
+        <div data-price-table="" class="new_price_wrapper">
+          <div
+            class="new_price_details_wrapper dny_class_one_step_daily dny_class_25k dny_class_metatrader5"
+          >
+            <div class="new_price_details_bx">
+              <div class="new_price_details_inner">
+                <div class="mb-0 w-form">
+                  <form
+                    id="email-form"
+                    name="email-form"
+                    data-name="Email Form"
+                    method="get"
+                    class="price_acc_frm"
+                    data-wf-page-id="6ab37af7fa75fdb5a74a1785"
+                    data-wf-element-id="d504144c-88f0-59d1-ff9b-ad3fc02c99b6"
+                    data-turnstile-sitekey="0x4AAAAAAAQTptj2So4dx43e"
+                    aria-label="Email Form"
+                    data-gtm-form-interact-id="0"
+                  >
+                    <div class="plan_select_acc_broker">
+                      <div class="new_plan_select_box center">
+                        <div class="new_plan_select_radio_label">Trade on</div>
+                        <label
+                          class="new_plan_select_radio_box sm w-radio active"
+                          ><input
+                            type="radio"
+                            name="plan_broker"
+                            id="metaTrader5"
+                            data-name="plan_broker"
+                            class="w-form-formradioinput new_plan_select_radio w-radio-input"
+                            value="metaTrader5"
+                          /><span
+                            class="new_plan_select w-form-label"
+                            for="metaTrader5"
+                            >MetaTrader 5</span
+                          >
+                          <div class="new_plan_select-img">
+                            <img
+                              loading="eager"
+                              src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6ab514493e58e820d7d9957b_Frame%202147239444.png"
+                              alt="Tradovate"
+                              class="new_plan_select-img-in"
+                            />
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="plan_select_separator"></div>
+                    <div class="plan_select_acc_type">
+                      <div class="new_plan_select_box">
+                        <label
+                          class="new_plan_select_radio_box lg w-radio active"
+                          ><input
+                            type="radio"
+                            name="plan_name"
+                            id="one_step_daily"
+                            data-name="plan_name"
+                            class="w-form-formradioinput new_plan_select_radio w-radio-input"
+                            value="one_step_daily"
+                            data-gtm-form-interact-field-id="1"
+                          /><span
+                            class="new_plan_select w-form-label"
+                            for="one_step_daily"
+                            >1-Step Daily</span
+                          >
+                          <div class="new_plan_select_tag money_black">
+                            DAILY PAYOUTS · 3% CAP
+                          </div>
+                          <p class="new_plan_select_desc">
+                            One-step evaluation
+                          </p> </label
+                        ><label class="new_plan_select_radio_box lg w-radio"
+                          ><input
+                            type="radio"
+                            name="plan_name"
+                            id="two_step_classic"
+                            data-name="plan_name"
+                            class="w-form-formradioinput new_plan_select_radio w-radio-input"
+                            value="two_step_classic"
+                          /><span
+                            class="new_plan_select w-form-label"
+                            for="two_step_classic"
+                            >2-Step Classic</span
+                          >
+                          <div class="new_plan_select_tag">
+                            BIWEEKLY PAYOUTS
+                          </div>
+                          <p class="new_plan_select_desc">
+                            Standard evaluation
+                          </p> </label
+                        ><label class="new_plan_select_radio_box lg w-radio"
+                          ><input
+                            type="radio"
+                            name="plan_name"
+                            id="direct"
+                            data-name="plan_name"
+                            class="w-form-formradioinput new_plan_select_radio w-radio-input"
+                            value="direct"
+                            data-gtm-form-interact-field-id="0"
+                          /><span
+                            class="new_plan_select w-form-label"
+                            for="direct"
+                            >Direct</span
+                          >
+                          <div class="new_plan_select_tag money_blue">
+                            Instant Sim Funding
+                          </div>
+                          <p class="new_plan_select_desc">
+                            Skip the evaluation
+                          </p>
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <div>
+                          <template shadowrootmode="closed"
+                            ><iframe
+                              src="https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/rl84p/0x4AAAAAAAQTptj2So4dx43e/auto/fbE/new/normal?lang=auto"
+                              allow="
+                                cross-origin-isolated;
+                                fullscreen;
+                                autoplay;
+                                keyboard-map;
+                                gamepad;
+                                xr-spatial-tracking;
+                              "
+                              sandbox="allow-same-origin allow-scripts allow-popups"
+                              id="cf-chl-widget-rl84p"
+                              title="Widget containing a Cloudflare security challenge"
+                              tabindex="-1"
+                              aria-hidden="true"
+                              style="
+                                border-width: medium;
+                                border-style: none;
+                                border-color: currentcolor;
+                                border-image: none;
+                                overflow: hidden;
+                                width: 1px;
+                                height: 1px;
+                                position: fixed;
+                                visibility: visible;
+                                opacity: 0.01;
+                                left: 0px;
+                                top: 0px;
+                                pointer-events: none;
+                                z-index: -1;
+                              "
+                            ></iframe
+                          ></template>
+                        </div>
+                        <input
+                          type="hidden"
+                          name="cf-turnstile-response"
+                          id="cf-chl-widget-rl84p_response"
+                          value="1.jRnQf92Ule7YG2UA9WcNVJQSqgtTZ9Rj04jz8UCI_OfDnd2ufKDYQYCXaGdN-qVYCr1s7Z735h9HBGQHgwdv4KnhmINRrfFAEFuV7-yrzdL-16SUs8CipXbwbzo6uLF4GuIwt9DviyuyidzuF53ClwwuGZUqcxIU8oNajvvMeuNDpTg3s2I-yY4pvh-e32ALMutZaec4zrkqfV_nujIte_CXxgT6eXKXlqOnZ_CVAgGGqUU_icgWr_2iu6hJyqjqISQrls8snBKC3xoaZSxQsveeZrj8j-cpp9EMIDJFLVXqCNl16r6GP6729azlLU3Pj6cSXTc5VBOBpUVoYctTvzlm8W_9-46oe3ZkA6KIvSZcVpcRcFdSLYT6RJX48mz_-FTeCEx9W4DUFcvx2_lAHp6WY9PdKmHvvBckpmWeScBmv5FUL1R77adbj3y1fluLYYsRETuc2s5qxt_fqtTrqa6JlEgJ2uMrDijBwUadgxOwwiqvA6NKab4v-bBl1ihuWgaVViaVrkmNaedOqqqmIGrdr2mydGoO-qrEPs42NSEITtdx16L3sK5LswPd8nWI06UJoEL_YVEH5j9WbjPLdU3jIh7O1tLpMIOQd_eSBrT5zHTq9Thy77rbNV9ByHw5_7DWjn1jKeBRw5uxPYrPh8NmmKiRTP3_D1ykmdZwq8c.2UMWr5B3jXlt9n0g3hVGFQ.d7883e265e0fc5c4f01eac38ecd360e7f6724c609aef3c9f1b5b7aa73f4358d5"
+                        />
+                      </div>
+                    </div>
+                  </form>
+                  <div
+                    class="w-form-done"
+                    tabindex="-1"
+                    role="region"
+                    aria-label="Email Form success"
+                  >
+                    <div>Thank you! Your submission has been received!</div>
+                  </div>
+                  <div
+                    class="w-form-fail"
+                    tabindex="-1"
+                    role="region"
+                    aria-label="Email Form failure"
+                  >
+                    <div>
+                      Oops! Something went wrong while submitting the form.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="new_price_details loaded">
+              <div class="new_price_details_right">
+                <div class="new_price_details_inr">
+                  <div class="ptr-grid-row">
+                    <div class="prt-col-grid">
+                      <div class="prt-card-wrapper" style="height: 623px">
+                        <div
+                          class="prt-card-shadow"
+                          style="
+                            transform: translateX(-50%) translateY(0px) scale(1);
+                            opacity: 0.5;
+                          "
+                        ></div>
+                        <div
+                          class="prt-card-filpper"
+                          style="
+                            transform: translateY(0px) translateZ(0px)
+                              rotateY(0deg);
+                            --sheen: 0;
+                            --sheen-x: 50%;
+                          "
+                        >
+                          <div
+                            class="prt-card-faces front eval"
+                            aria-hidden="false"
+                            style=""
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">10K</strong
+                                      ><span>Daily</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$89</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$58</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Target
+                                    </div>
+                                    <div class="prt-mob-data">$1,000</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Daily Loss</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$500</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data">
+                                      40% eval only
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Leverage</div>
+                                    <div class="prt-mob-data">
+                                      Up to 1:100 FX
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-back"
+                                      >View Funded Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-10k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div>Start with 10K</div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $31 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="prt-card-faces back funded"
+                            style="position: absolute; height: 100%"
+                            aria-hidden="true"
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">10K</strong
+                                      ><span>Sim Funded</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$89</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$58</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Daily Loss Limit
+                                    </div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$500</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Buffer
+                                      <div class="tt_tip_wrp">
+                                        <div class="tt_tip white">?</div>
+                                        <div class="tt_top_box">
+                                          <p class="mb-0">
+                                            Daily payouts come from profit above
+                                            a 4% buffer, which stays in your
+                                            account. Maximum 3% of the account
+                                            size per payout.
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="prt-mob-data">4%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-front"
+                                      >View Evaluation Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-10k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div style="display: none">
+                                            Get Funded with 10K
+                                          </div>
+                                          <div style="display: block">
+                                            Start Evaluation
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $31 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="prt-card-edge" style="opacity: 0"></div>
+                      </div>
+                    </div>
+                    <div class="prt-col-grid">
+                      <div class="prt-card-wrapper" style="height: 623px">
+                        <div
+                          class="prt-card-shadow"
+                          style="
+                            transform: translateX(-50%) translateY(0px) scale(1);
+                            opacity: 0.5;
+                          "
+                        ></div>
+                        <div
+                          class="prt-card-filpper"
+                          style="
+                            transform: translateY(0px) translateZ(0px)
+                              rotateY(0deg);
+                            --sheen: 0;
+                            --sheen-x: 50%;
+                          "
+                        >
+                          <div
+                            class="prt-card-faces front eval"
+                            aria-hidden="false"
+                            style=""
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner selected">
+                              <div class="prt-selected-border active"></div>
+                              <div class="prt-pp-tag active">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">25K</strong
+                                      ><span>Daily</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$149</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$97</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Target
+                                    </div>
+                                    <div class="prt-mob-data">$2,500</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Daily Loss</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$1,250</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data">
+                                      40% eval only
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Leverage</div>
+                                    <div class="prt-mob-data">
+                                      Up to 1:100 FX
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-back"
+                                      >View Funded Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-25k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div>Start with 25K</div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $52 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="prt-card-faces back funded"
+                            style="position: absolute; height: 100%"
+                            aria-hidden="true"
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner selected">
+                              <div class="prt-selected-border active"></div>
+                              <div class="prt-pp-tag active">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">25K</strong
+                                      ><span>Sim Funded</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$149</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$97</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Daily Loss Limit
+                                    </div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$1,250</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Buffer
+                                      <div class="tt_tip_wrp">
+                                        <div class="tt_tip white">?</div>
+                                        <div class="tt_top_box">
+                                          <p class="mb-0">
+                                            Daily payouts come from profit above
+                                            a 4% buffer, which stays in your
+                                            account. Maximum 3% of the account
+                                            size per payout.
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="prt-mob-data">4%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-front"
+                                      >View Evaluation Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-25k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div style="display: none">
+                                            Get Funded with 25K
+                                          </div>
+                                          <div style="display: block">
+                                            Start Evaluation
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $52 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="prt-card-edge" style="opacity: 0"></div>
+                      </div>
+                    </div>
+                    <div class="prt-col-grid">
+                      <div class="prt-card-wrapper" style="height: 623px">
+                        <div
+                          class="prt-card-shadow"
+                          style="
+                            transform: translateX(-50%) translateY(0px) scale(1);
+                            opacity: 0.5;
+                          "
+                        ></div>
+                        <div
+                          class="prt-card-filpper"
+                          style="
+                            transform: translateY(0px) translateZ(0px)
+                              rotateY(0deg);
+                            --sheen: 0;
+                            --sheen-x: 50%;
+                          "
+                        >
+                          <div
+                            class="prt-card-faces front eval"
+                            aria-hidden="false"
+                            style=""
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">50K</strong
+                                      ><span>Daily</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$249</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$162</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Target
+                                    </div>
+                                    <div class="prt-mob-data">$5,000</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Daily Loss</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$2,500</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data">
+                                      40% eval only
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Leverage</div>
+                                    <div class="prt-mob-data">
+                                      Up to 1:100 FX
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-back"
+                                      >View Funded Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-50k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div>Start with 50K</div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $87 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="prt-card-faces back funded"
+                            style="position: absolute; height: 100%"
+                            aria-hidden="true"
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">50K</strong
+                                      ><span>Sim Funded</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$249</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$162</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Daily Loss Limit
+                                    </div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$2,500</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Buffer
+                                      <div class="tt_tip_wrp">
+                                        <div class="tt_tip white">?</div>
+                                        <div class="tt_top_box">
+                                          <p class="mb-0">
+                                            Daily payouts come from profit above
+                                            a 4% buffer, which stays in your
+                                            account. Maximum 3% of the account
+                                            size per payout.
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="prt-mob-data">4%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-front"
+                                      >View Evaluation Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-50k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div style="display: none">
+                                            Get Funded with 50K
+                                          </div>
+                                          <div style="display: block">
+                                            Start Evaluation
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $87 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="prt-card-edge" style="opacity: 0"></div>
+                      </div>
+                    </div>
+                    <div class="prt-col-grid">
+                      <div class="prt-card-wrapper" style="height: 623px">
+                        <div
+                          class="prt-card-shadow"
+                          style="
+                            transform: translateX(-50%) translateY(0px) scale(1);
+                            opacity: 0.5;
+                          "
+                        ></div>
+                        <div
+                          class="prt-card-filpper"
+                          style="
+                            transform: translateY(0px) translateZ(0px)
+                              rotateY(0deg);
+                            --sheen: 0;
+                            --sheen-x: 50%;
+                          "
+                        >
+                          <div
+                            class="prt-card-faces front eval"
+                            aria-hidden="false"
+                            style=""
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">100K</strong
+                                      ><span>Daily</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$429</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$279</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Target
+                                    </div>
+                                    <div class="prt-mob-data">$10,000</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Daily Loss</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$5,000</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data">
+                                      40% eval only
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Leverage</div>
+                                    <div class="prt-mob-data">
+                                      Up to 1:100 FX
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-back"
+                                      >View Funded Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-100k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div>Start with 100K</div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $150 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="prt-card-faces back funded"
+                            style="position: absolute; height: 100%"
+                            aria-hidden="true"
+                          >
+                            <div class="sheen"></div>
+                            <div class="prt-col-grid-inner">
+                              <div class="prt-selected-border"></div>
+                              <div class="prt-pp-tag">
+                                <div class="prt-pp-tag-outer">
+                                  <div class="prt-pp-tag-inner">
+                                    MOST POPULAR
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-head">
+                                <img
+                                  class="ptr-bg-img1"
+                                  src="./index_files/6ab63629003b85ae1003b60b_pricing-card (1).webp"
+                                  alt="background image"
+                                />
+                                <img
+                                  class="ptr-bg-img2"
+                                  src="./index_files/6ab63d1428385fd73a522a15_Frame 2147239624.webp"
+                                  alt="background image"
+                                />
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="pt_hdr sm">
+                                      <strong class="pt_hdr-big">100K</strong
+                                      ><span>Sim Funded</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <div class="prt-inline">
+                                      <div
+                                        class="new_price_prev"
+                                        style="display: block"
+                                      >
+                                        <div>$429</div>
+                                      </div>
+                                      <div class="new_price_current">
+                                        <div>$279</div>
+                                      </div>
+                                      <div class="ptr_price_tagline">
+                                        one time payment
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="ptr-body">
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Daily Loss Limit
+                                    </div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Max Loss</div>
+                                    <div class="prt-mob-data">$5,000</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">Consistency</div>
+                                    <div class="prt-mob-data tdfy-blue">
+                                      None
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Buffer
+                                      <div class="tt_tip_wrp">
+                                        <div class="tt_tip white">?</div>
+                                        <div class="tt_top_box">
+                                          <p class="mb-0">
+                                            Daily payouts come from profit above
+                                            a 4% buffer, which stays in your
+                                            account. Maximum 3% of the account
+                                            size per payout.
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="prt-mob-data">4%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Profit Split
+                                    </div>
+                                    <div class="prt-mob-data">80%</div>
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col prt-mob-col">
+                                    <div class="prt-mob-label">
+                                      Payout Frequency
+                                    </div>
+                                    <div class="prt-mob-data">
+                                      Daily (3% cap)
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ptr-foot">
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      href="https://tradeifx.webflow.io/#"
+                                      class="flip_card_btn flip-to-front"
+                                      >View Evaluation Rules</a
+                                    >
+                                  </div>
+                                </div>
+                                <div class="ptr-row">
+                                  <div class="prt-col">
+                                    <a
+                                      data-onscreen-btnx=""
+                                      data-react=""
+                                      href="https://checkout.tradeifyfx.co/?plan=daily-100k-mt5"
+                                      class="tdfy-style-btn w-inline-block tdfy-price-btn price-btn"
+                                    >
+                                      <div
+                                        class="tdfy-style-outer-border left-br"
+                                        style="opacity: 0"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-outer-border right-br"
+                                        style="opacity: 1"
+                                      ></div>
+                                      <div
+                                        class="tdfy-style-border-right tdfy-style-border"
+                                        style="opacity: 1"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-border-left tdfy-style-border"
+                                        style="opacity: 0"
+                                      >
+                                        <div
+                                          class="tdfy-style-border-light"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-absolute-box"
+                                        style="
+                                          transform: translateX(95px)
+                                            translateZ(0px);
+                                        "
+                                      >
+                                        <div
+                                          class="tdfy-style-absolute-glow"
+                                        ></div>
+                                      </div>
+                                      <div
+                                        class="tdfy-style-btn-box tdfy-price-btn-box"
+                                      >
+                                        <div class="tdfy-style-text">
+                                          <div style="display: none">
+                                            Get Funded with 100K
+                                          </div>
+                                          <div style="display: block">
+                                            Start Evaluation
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="ptr-row" style="display: none">
+                                  <div class="prt-col pt-0">
+                                    <div class="price_details_cp_tag">
+                                      <div>Save $150 with code OCT</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="prt-card-edge" style="opacity: 0"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="new_price_details_btm">
+              <ul role="list" class="new_price_pay_card_list">
+                <li class="new_price_pay_card_list_item">
+                  <img
+                    loading="eager"
+                    src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a353cd904744ff9f6f50ef5_Frame%202147229904.png"
+                    alt=""
+                    class="new_price_pay_card_list_img"
+                  />
+                </li>
+                <li class="new_price_pay_card_list_item">
+                  <img
+                    loading="eager"
+                    src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a353cd904744ff9f6f50ee5_Frame%202147229904%20(2).svg"
+                    alt=""
+                    class="new_price_pay_card_list_img"
+                  />
+                </li>
+                <li class="new_price_pay_card_list_item">
+                  <img
+                    loading="eager"
+                    src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a353cd904744ff9f6f50ef4_Frame%202147229904%20(1).svg"
+                    alt=""
+                    class="new_price_pay_card_list_img"
+                  />
+                </li>
+              </ul>
+              <div class="prt_pay_ul mx">
+                <ul role="list" class="text-flex">
+                  <li class="text-flex-imt">
+                    <div class="wrp-tag-btm">
+                      <img
+                        width="16"
+                        height="16"
+                        alt="Icon"
+                        src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a38eff585c2bc351f1d9f9d_Group%20316124993.svg"
+                        loading="eager"
+                        class="text-flex-icon"
+                      />
+                      <div class="text-flex-title">Crypto accepted</div>
+                    </div>
+                  </li>
+                  <li class="text-flex-imt">
+                    <div class="wrp-tag-btm">
+                      <img
+                        width="16"
+                        height="16"
+                        alt="Icon"
+                        src="https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a38eff585c2bc351f1d9f9d_Group%20316124993.svg"
+                        loading="eager"
+                        class="text-flex-icon"
+                      />
+                      <div class="text-flex-title">
+                        Instant account activation
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
